@@ -1,0 +1,22 @@
+{
+  "name": "chayns-doc",
+  "version": "0.0.1",
+  "description": "A documentation for the global chayns object for chayns development",
+  "main": "index.js",
+  "scripts": {
+    "pub": "npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chincoe/chayns-doc.git"
+  },
+  "keywords": [
+    "chayns"
+  ],
+  "author": "Christian Nagel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chincoe/chayns-doc/issues"
+  },
+  "homepage": "https://github.com/chincoe/chayns-doc#readme"
+}
