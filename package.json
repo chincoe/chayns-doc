@@ -1,6 +1,6 @@
 {
   "name": "chayns-doc",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A documentation for the global chayns object for chayns development",
   "main": "index.js",
   "scripts": {
