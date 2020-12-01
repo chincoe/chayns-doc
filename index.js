@@ -105,7 +105,7 @@ var __PRODUCTION__ = true;
 
 /**
  * @typedef sharingServicesResult
- * @property {Object} retval
+ * @property {object} retval
  * @property {Array.<number>} retval.availableSharingApps
  */
 
@@ -122,7 +122,7 @@ var __PRODUCTION__ = true;
  * @property {string} colorString
  * @property {number} sortId
  * @property {string} icon
- * @property {function} callbackURL
+ * @property {Function} callbackURL
  * @property {string} url
  * @property {string} buttonName
  * @property {boolean} isExclusiveView
@@ -158,9 +158,9 @@ var __PRODUCTION__ = true;
  * @typedef openUrlConfig
  * @property {string} [url]
  * @property {string} [title]
- * @property {boolean} [exclusiveView],
- * @property {boolean} [darkenBackground],
- * @property {boolean} [fullSize],
+ * @property {boolean} [exclusiveView]
+ * @property {boolean} [darkenBackground]
+ * @property {boolean} [fullSize]
  * @property {number} [width]
  */
 
@@ -182,21 +182,21 @@ var __PRODUCTION__ = true;
  * @property {number} branchId
  * @property {number} internalShopId
  * @property {*} tappType
- * @property {Object} parameters
+ * @property {object} parameters
  * @property {boolean} refresh
  * @property {boolean} createShop
- * @property {Object} tapp
+ * @property {object} tapp
  * @property {boolean} [tapp.useFloatingButton=true]
  * @property {boolean} [tapp.useFloatingButtonText=true]
  * @property {boolean} [tapp.useSubTapp=true]
  * @property {boolean} [tapp.replaceTapp=true]
  * @property {boolean} [tapp.hasSubTapp=false]
  * @property {boolean} [tapp.useExclusiveMode=false]
- * @property {function} [tapp.floatingButtonCallback=null]
+ * @property {Function} [tapp.floatingButtonCallback=null]
  * @property {boolean} [tapp.forceFloatingButton=false]
  * @property {string} [tapp.customShopUrl=null]
- * @property {Object} [tapp.parameters=null]
- * @property {Object} [tapp.paymentInformation=null]
+ * @property {object} [tapp.parameters=null]
+ * @property {object} [tapp.paymentInformation=null]
  * @property {boolean} [tapp.useFloatingButtonBadge=false]
  * @property {string} [tapp.floatingButtonIcon='fa-shopping-cart']
  * @property {boolean} [tapp.suggestLogin=false]
@@ -225,7 +225,7 @@ var __PRODUCTION__ = true;
  *     sendEventToTopFrame(*),
  *     createQRCode(string): Promise<string>,
  *     removeOnActivateListener(function): boolean,
- *     vibrate([number], number=),
+ *     vibrate(number[], number),
  *     removeAccessTokenChangeListener(function): boolean,
  *     removeSubTapp(removeSubTappConfig): Promise<undefined>,
  *     mimeType: {
@@ -330,10 +330,10 @@ var __PRODUCTION__ = true;
  *      setHeight(setHeightConfig): Promise<undefined>,
  *      allowRefreshScroll(): Promise<undefined>,
  *      hideBackButton(),
- *      showWaitCursor(string=, number=): Promise<undefined>,
+ *      showWaitCursor(string=, number): Promise<undefined>,
  *      updateCloudImage(),
  *      addAdminSwitchListener(function): boolean,
- *      openImage([string], number): Promise<undefined>,
+ *      openImage(string[], number): Promise<undefined>,
  *      getUser(Object): Promise<userResult>,
  *      updateTapp(*),
  *      storage: {
@@ -346,8 +346,8 @@ var __PRODUCTION__ = true;
  *          },
  *          remove(*, *)
  *      },
- *      login([string]=): Promise<loginStateResult>,
- *      logout(logoutType=): Promise<undefined>,
+ *      login(string[]): Promise<loginStateResult>,
+ *      logout(logoutType): Promise<undefined>,
  *      addNetworkChangeListener(function): boolean,
  *      addAccessTokenChangeListener(function): boolean,
  *      removeAdminSwitchListener(function): boolean,
@@ -416,7 +416,7 @@ var __PRODUCTION__ = true;
  *      },
  *      showSnackbar(*),
  *      ready: Promise<*>,
- *      scrollToY(number, number=),
+ *      scrollToY(number, number),
  *      showTitleImage(),
  *      removeWindowMetricsListener(function): boolean,
  *      getGeoLocation(): Promise<geoLocation>,
@@ -471,7 +471,7 @@ var __PRODUCTION__ = true;
  *          DEFAULT: number
  *      },
  *      removeScrollListener(function): boolean,
- *      listeners: [null],
+ *      listeners: null[],
  *      hideOverlay(): Promise,
  *      activateAdminMode(): Promise,
  *      getGlobalData(),
@@ -522,8 +522,7 @@ var __PRODUCTION__ = true;
  *                  barWide: boolean
  *              },
  *              locationId: number,
- *              tapps: [
- *                  {
+ *              tapps: Array.<{
  *                      customUrl: string,
  *                      internalName: string,
  *                      isSubTapp: boolean,
@@ -533,8 +532,7 @@ var __PRODUCTION__ = true;
  *                      isHiddenFromMenu: boolean,
  *                      icon: string,
  *                      id: number
- *                  }
- *              ],
+ *                  }>,
  *              domain: string,
  *              id: string,
  *              tapp: {
@@ -547,7 +545,7 @@ var __PRODUCTION__ = true;
  *                  isHiddenFromMenu: boolean,
  *                  icon: string,
  *                  id: number,
- *                  userGroupIds: [number]
+ *                  userGroupIds: number[]
  *              },
  *              font: number
  *          },
@@ -562,12 +560,10 @@ var __PRODUCTION__ = true;
  *              tobitAccessToken: string,
  *              name: string,
  *              adminMode: boolean,
- *              groups: [
- *                  {
+ *              groups: Array.<{
  *                      id: number,
  *                      isActive: boolean
- *                  }
- *              ],
+ *                  }>,
  *              personId: string,
  *              id: number,
  *              isAuthenticated: boolean,
@@ -658,7 +654,7 @@ var __PRODUCTION__ = true;
  *          fullname: string,
  *          invoiceRequested: boolean,
  *          tipSum: number,
- *          articles: {amount: number, id: number}[]
+ *          articles: Array.<{amount: number, id: number}>
  *      },
  *      remove(),
  *      confirm(),
@@ -669,7 +665,7 @@ var __PRODUCTION__ = true;
  *      create(),
  *      setTip(),
  *      exp: number,
- *      smartCheckout(*=)
+ *      smartCheckout(*)
  *  },
  *  offer: {
  *      getCategories(),
@@ -733,7 +729,7 @@ var chayns = {
 
     /**
      * @callback adminSwitchCb
-     * @param {Object} result
+     * @param {object} result
      * @param {number} result.mode
      */
 
@@ -745,7 +741,7 @@ var chayns = {
 
     /**
      * @callback geoLocationCb
-     * @param {Object} geoLocation
+     * @param {object} geoLocation
      * @param {number} latitude
      * @param {number} longitude
      * @param {number} speed
@@ -764,7 +760,7 @@ var chayns = {
      */
 
     /**
-     * @param callback
+     * @param {Function} callback
      * @returns {boolean} success
      */
     addNetworkChangeListener: function addNetworkChangeListener(callback) {},
@@ -823,7 +819,7 @@ var chayns = {
 
     /**
      * @returns {Promise<undefined>}
-     * @param {Object} parameters
+     * @param {object} parameters
      * @param {boolean} overwrite
      */
     appendUrlParameter: function appendUrlParameter(parameters, overwrite) {},
@@ -883,7 +879,7 @@ var chayns = {
     getGeoLocation: function getGeoLocation() {},
 
     /**
-     * @returns {Promise<Object>}
+     * @returns {Promise<object>}
      */
     getGlobalData: function getGlobalData() {},
 
@@ -899,7 +895,7 @@ var chayns = {
 
     /**
      * @returns {Promise<userResult>}
-     * @param {Object} config
+     * @param {object} config
      * @param {string} [config.AccessToken]
      * @param {number} [config.FBID]
      * @param {number} [config.UserID]
@@ -940,7 +936,7 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {Object} config - s.chaynsCalls docs
+     * @param {object} config - s.chaynsCalls docs
      */
     invokeCall: function invokeCall(config) {},
 
@@ -970,12 +966,12 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {Object} config
+     * @param {object} config
      * @param {string} config.url
      * @param {string} [config.title]
-     * @param {boolean} [config.exclusiveView],
-     * @param {boolean} [config.darkenBackground],
-     * @param {boolean} [config.fullSize],
+     * @param {boolean} [config.exclusiveView]
+     * @param {boolean} [config.darkenBackground]
+     * @param {boolean} [config.fullSize]
      * @param {number} [config.width]
      */
     openUrl: function openUrl(config) {},
@@ -987,7 +983,7 @@ var chayns = {
     openUrlInBrowser: function openUrlInBrowser(url) {},
 
     /**
-     * @return {Promise}
+     * @returns {Promise}
      * @param {string} url
      */
     openVideo: function openVideo(url) {},
@@ -999,7 +995,7 @@ var chayns = {
 
     /**
      * @returns {*}
-     * @param {Object} config
+     * @param {object} config
      */
     register: function register(config) {},
 
@@ -1053,7 +1049,7 @@ var chayns = {
 
     /**
      * @returns {Promise<undefined>}
-     * @param {Object} config
+     * @param {object} config
      * @param {number} config.tappID
      * @param {boolean} config.close
      * @param {boolean} config.remove
@@ -1075,7 +1071,7 @@ var chayns = {
     scrollToY: function scrollToY(position, duration) {},
 
     /**
-     * @param {Object} tapp
+     * @param {object} tapp
      * @param {number} [tapp.tappId]
      * @param {string} [tapp.showName]
      * @param {string} [tapp.internalName]
@@ -1087,7 +1083,7 @@ var chayns = {
 
     /**
      * @returns {Promise<undefined>}
-     * @param {Object} config
+     * @param {object} config
      * @param {number} config.height
      * @param {boolean} config.growOnly
      * @param {boolean} config.full
@@ -1104,14 +1100,14 @@ var chayns = {
 
     /**
      * @returns {Promise<undefined>}
-     * @param {Object} config
+     * @param {object} config
      * @param {number} config.tappID
-     * @param {string} config.name,
+     * @param {string} config.name
      * @param {string} config.color
      * @param {string} config.colorText
      * @param {number} config.sortID
      * @param {string} config.icon
-     * @param {function} config.callbackURL
+     * @param {Function} config.callbackURL
      * @param {string} config.url
      * @param {string} config.buttonName
      * @param {boolean} config.isExclusiveView
@@ -1123,7 +1119,7 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {Object} config
+     * @param {object} config
      * @param {string} config.title
      * @param {string} config.text
      * @param {string} config.imageUrl
@@ -1135,14 +1131,14 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {Object} config
-     * @param {function} config.callback
+     * @param {object} config
+     * @param {Function} config.callback
      * @param {string} config.text
      * @param {string} config.color
      * @param {string} config.colorText
      * @param {string} config.icon
      * @param {number} config.position
-     * @param onClick
+     * @param {Function} onClick
      */
     showFloatingButton: function showFloatingButton(config, onClick) {},
 
@@ -1561,7 +1557,7 @@ var chayns = {
         /**
          * @param headline
          * @param text
-         * @returns Promise
+         * @returns {Promise}
          */
         alert: function alert(headline, text) {},
 
@@ -1569,56 +1565,56 @@ var chayns = {
          * @param headline
          * @param text
          * @param buttons
-         * @returns Promise
+         * @returns {Promise}
          */
         confirm: function confirm(headline, text, buttons) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         input: function input(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         select: function select(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         date: function date(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         advancedDate: function advancedDate(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         mediaSelect: function mediaSelect(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         fileSelect: function fileSelect(config) {},
 
         /**
          * @param config
-         * @returns Promise
+         * @returns {Promise}
          */
         iFrame: function iFrame(config) {},
 
         /**
          * @param {*} data
          * @param {boolean} isApiEvent
-         * @returns Promise
+         * @returns {Promise}
          */
         sendData: function sendData(data, isApiEvent) {},
 
@@ -1793,14 +1789,14 @@ var chayns = {
         /**
          * @returns {Promise<Response>}
          * @param {number} groupId
-         * @param {Object} config
+         * @param {object} config
          * @param {string} config.text
          */
         sendMessageToGroup: function sendMessageToGroup(groupId, config) {},
 
         /**
          * @returns {Promise<Response>}
-         * @param {Object} config
+         * @param {object} config
          * @param {string} config.text
          */
         sendMessageToPage: function sendMessageToPage(config) {},
@@ -1808,7 +1804,7 @@ var chayns = {
         /**
          * @returns {Promise<Response>}
          * @param {number} userId
-         * @param {Object} config
+         * @param {object} config
          * @param {string} config.text
          */
         sendMessageToUser: function sendMessageToUser(userId, config) {}
@@ -1858,7 +1854,7 @@ var chayns = {
             removeArticle: function removeArticle(article) {},
 
             /**
-             * @returns {Object}
+             * @returns {object}
              */
             get: function get() {},
             set: function set() {},
@@ -1877,7 +1873,7 @@ var chayns = {
             gotoShop: function gotoShop() {},
 
             /**
-             * @param {Object} config
+             * @param {object} config
              * @param {string} config.customShopUrl
              */
             configure: function configure(config) {},
@@ -1892,6 +1888,7 @@ var chayns = {
                 /**
                  * @param {string} field
                  * @param {string} value
+                 * @param _ref
                  */
                 updateText: function updateText(_ref) {
                     var field = _ref.field,
