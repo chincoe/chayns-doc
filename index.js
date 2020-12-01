@@ -75,7 +75,7 @@ var __PRODUCTION__ = true;
  */
 
 /**
- * @typedef sharingServicesResult {{retval:{availableSharingApps: [number]}}}
+ * @typedef sharingServicesResult {{retval:{availableSharingApps: Array.<number>}}}
  */
 
 /**
@@ -98,13 +98,13 @@ var __PRODUCTION__ = true;
  */
 
 /**
- * @typedef findPersonResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: [{name:
- *     string, personId: string, facebookId: number, lastLoginTime: string, currentLocationId: number}]}}
+ * @typedef findPersonResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: Array.<{name:
+ *     string, personId: string, facebookId: number, lastLoginTime: string, currentLocationId: number}>}}
  */
 
 /**
- * @typedef findSiteResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: [{siteId:
- *     string, locationId: number, appstoreName: string}]}}
+ * @typedef findSiteResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: Array.<{siteId:
+ *     string, locationId: number, appstoreName: string}>}}
  */
 
 /**
@@ -192,7 +192,7 @@ var __PRODUCTION__ = true;
  *          DOCUMENT: number,
  *          AUDIO: number
  *     },
- *     getWebviewOptions(): Promise<unknown>,
+ *     getWebviewOptions(): Promise<*>,
  *     dynamicFontSize(),
  *     hideWaitCursor(): Promise<undefined>,
  *     uploadToCloud(*, *),
@@ -373,7 +373,7 @@ var __PRODUCTION__ = true;
  *          USER: number
  *      },
  *      showSnackbar(*),
- *      ready: Promise<unknown>,
+ *      ready: Promise<*>,
  *      scrollToY(number, number=),
  *      showTitleImage(),
  *      removeWindowMetricsListener(function): boolean,
@@ -547,7 +547,7 @@ var __PRODUCTION__ = true;
  *          isIOS: boolean,
  *          _parameters: {}
  *      },
- *      getLastPushNotification(): Promise<unknown>,
+ *      getLastPushNotification(): Promise<*>,
  *      openUrl(openUrlConfig): Promise,
  *      disallowRefreshScroll(): Promise<undefined>,
  *      showBackButton(*),
@@ -616,7 +616,7 @@ var __PRODUCTION__ = true;
  *          fullname: string,
  *          invoiceRequested: boolean,
  *          tipSum: number,
- *          articles: [{amount: number, id: number}]
+ *          articles: {amount: number, id: number}[]
  *      },
  *      remove(),
  *      confirm(),
@@ -669,7 +669,7 @@ var __PRODUCTION__ = true;
  *      setClientCart(),
  *      createFromClientCart()
  *   }}
- *      }}
+ * }}
 
  */
 
@@ -692,7 +692,7 @@ var chayns = {
     /**
      * @callback adminSwitchCb
      * @param {Object} result
-     * @param {number|0|1} result.mode
+     * @param {number} result.mode
      */
 
     /**
@@ -846,12 +846,12 @@ var chayns = {
     getGlobalData: function getGlobalData() {},
 
     /**
-     * @returns {Promise<unknown>}
+     * @returns {Promise<*>}
      */
     getLastPushNotification: function getLastPushNotification() {},
 
     /**
-     * @returns {Promise<unknown>}
+     * @returns {Promise<*>}
      */
     getNetworkStatus: function getNetworkStatus() {},
 
@@ -1143,7 +1143,7 @@ var chayns = {
     uploadToCloud: function uploadToCloud(file, param) {},
 
     /**
-     * @returns
+     * @returns {*}
      * @param {number[]} pattern
      * @param {number} iOSFeedbackVibration
      */
