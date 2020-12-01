@@ -44,48 +44,90 @@ var __PROD__ = true;
 
 var __PRODUCTION__ = true;
 /**
- * @typedef userResult {{Type: number, PersonID: string, FacebookID: number, FirstName: string, UserID: number,
- *     LastName: string, ChaynsLogin: null, UserFullName: string}}
+ * @typedef userResult
+ * @property {number} Type
+ * @property {string} PersonID
+ * @property {number} FacebookID
+ * @property {string} FirstName
+ * @property {number} UserID
+ * @property {string} LastName
+ * @property {string} ChaynsLogin
+ * @property {string} UserFullName
  */
 
 /**
- * @typedef logoutType {{FALSE: number, NORMAL: number}}
+ * @typedef logoutType
+ * @property {number} FALSE
+ * @property {number} NORMAL
  */
 
 /**
- * @typedef loginState {{FACEBOOK: number, T_WEB: number, CANCEL: number, ALREADY_LOGGED_IN: number}}
+ * @typedef loginState
+ * @property {number} FACEBOOK
+ * @property {number} T_WEB
+ * @property {number} CANCEL
+ * @property {number} ALREADY_LOGGED_IN
  */
 
 /**
- * @typedef cameraType {{AUTO: number, BACK: number, FRONT: number}}
+ * @typedef cameraType
+ * @property {number} AUTO
+ * @property {number} BACK
+ * @property {number} FRONT
  */
 
 /**
- * @typedef geoLocation {{latitude: number, accuracy: number, speed: number, longitude: number}}
+ * @typedef geoLocation
+ * @property {number} latitude
+ * @property {number} accuracy
+ * @property {number} speed
+ * @property {number} longitude
  */
 
 /**
- * @typedef sharingConfig {{title: string, text: string, imageUrl: string, sharingApp: number, sharingAndroidApp:
- *     string}}
+ * @typedef sharingConfig
+ * @property {string} title
+ * @property {string} text
+ * @property {string} imageUrl
+ * @property {number} sharingApp
+ * @property {string} sharingAndroidApp
  */
 
 /**
- * @typedef windowMetrics {{pageYOffset: number, windowHeight: number, frameX: number, scrollTop: number, frameY:
- *     number, height: number}}
+ * @typedef windowMetrics
+ * @property {number} pageYOffset
+ * @property {number} windowHeight
+ * @property {number} frameX
+ * @property {number} frameY
+ * @property {number} scrollTop
+ * @property {number} height
  */
 
 /**
- * @typedef sharingServicesResult {{retval:{availableSharingApps: Array.<number>}}}
+ * @typedef sharingServicesResult
+ * @property {Object} retval
+ * @property {Array.<number>} retval.availableSharingApps
  */
 
 /**
- * @typedef intercomConfig {{text: string}}
+ * @typedef intercomConfig
+ * @property {string} text
  */
 
 /**
- * @typedef subTappConfig {{tappID: number, name: string, color: string, colorText: string, sortID: number, icon:
- *     string, callbackURL: function, url: string, buttonName: string, isExclusiveView: boolean, replaceParent:
- *     boolean, boldText: boolean}}
+ * @typedef subTappConfig
+ * @property {number} tappID
+ * @property {string} name
+ * @property {string} color
+ * @property {string} colorString
+ * @property {number} sortId
+ * @property {string} icon
+ * @property {function} callbackURL
+ * @property {string} url
+ * @property {string} buttonName
+ * @property {boolean} isExclusiveView
+ * @property {boolean} replaceParent
+ * @property {boolean} boldText
  */
 
 /**
@@ -98,13 +140,13 @@ var __PRODUCTION__ = true;
  */
 
 /**
- * @typedef findPersonResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: Array.<{name:
- *     string, personId: string, facebookId: number, lastLoginTime: string, currentLocationId: number}>}}
+ * @typedef findPersonResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value:
+ *     Array.<{name: string, personId: string, facebookId: number, lastLoginTime: string, currentLocationId: number}>}}
  */
 
 /**
- * @typedef findSiteResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value: Array.<{siteId:
- *     string, locationId: number, appstoreName: string}>}}
+ * @typedef findSiteResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value:
+ *     Array.<{siteId: string, locationId: number, appstoreName: string}>}}
  */
 
 /**
@@ -114,12 +156,12 @@ var __PRODUCTION__ = true;
 
 /**
  * @typedef openUrlConfig
- * @property {string} [url=]
- * @property {string} [title=]
- * @property {boolean} [exclusiveView=],
- * @property {boolean} [darkenBackground=],
- * @property {boolean} [fullSize=],
- * @property {number} [width=]
+ * @property {string} [url]
+ * @property {string} [title]
+ * @property {boolean} [exclusiveView],
+ * @property {boolean} [darkenBackground],
+ * @property {boolean} [fullSize],
+ * @property {number} [width]
  */
 
 /**
@@ -129,34 +171,34 @@ var __PRODUCTION__ = true;
 
 /**
  * @typedef smartShopArticle
- * @property {number} id,
+ * @property {number} id
  * @property {number} amount
  */
 
 /**
  * @typedef smartShopConfig
- * @property {string} introText,
- * @property {string} headline,
- * @property {number} branchId,
- * @property {number} internalShopId,
- * @property {*} tappType,
- * @property {Object} parameters,
- * @property {boolean} refresh,
- * @property {boolean} createShop,
+ * @property {string} introText
+ * @property {string} headline
+ * @property {number} branchId
+ * @property {number} internalShopId
+ * @property {*} tappType
+ * @property {Object} parameters
+ * @property {boolean} refresh
+ * @property {boolean} createShop
  * @property {Object} tapp
- * @property {boolean} [tapp.useFloatingButton=true],
- * @property {boolean} [tapp.useFloatingButtonText=true],
- * @property {boolean} [tapp.useSubTapp=true],
- * @property {boolean} [tapp.replaceTapp=true],
- * @property {boolean} [tapp.hasSubTapp=false],
- * @property {boolean} [tapp.useExclusiveMode=false],
- * @property {function} [tapp.floatingButtonCallback=null],
- * @property {boolean} [tapp.forceFloatingButton=false],
- * @property {string} [tapp.customShopUrl=null],
- * @property {Object} [tapp.parameters=null],
- * @property {Object} [tapp.paymentInformation=null],
- * @property {boolean} [tapp.useFloatingButtonBadge=false],
- * @property {string} [tapp.floatingButtonIcon='fa-shopping-cart'],
+ * @property {boolean} [tapp.useFloatingButton=true]
+ * @property {boolean} [tapp.useFloatingButtonText=true]
+ * @property {boolean} [tapp.useSubTapp=true]
+ * @property {boolean} [tapp.replaceTapp=true]
+ * @property {boolean} [tapp.hasSubTapp=false]
+ * @property {boolean} [tapp.useExclusiveMode=false]
+ * @property {function} [tapp.floatingButtonCallback=null]
+ * @property {boolean} [tapp.forceFloatingButton=false]
+ * @property {string} [tapp.customShopUrl=null]
+ * @property {Object} [tapp.parameters=null]
+ * @property {Object} [tapp.paymentInformation=null]
+ * @property {boolean} [tapp.useFloatingButtonBadge=false]
+ * @property {string} [tapp.floatingButtonIcon='fa-shopping-cart']
  * @property {boolean} [tapp.suggestLogin=false]
  */
 
@@ -172,7 +214,7 @@ var __PRODUCTION__ = true;
  *          LEFT: number,
  *          RIGHT: number
  *      },
- *      showOverlay(string, string): Promise,
+ *      showOverlay(string, string): Promise<*>,
  *      loginState: {
  *          FACEBOOK: number,
  *          T_WEB: number,
@@ -858,10 +900,10 @@ var chayns = {
     /**
      * @returns {Promise<userResult>}
      * @param {Object} config
-     * @param {string} [config.AccessToken=]
-     * @param {number} [config.FBID=]
-     * @param {number} [config.UserID=]
-     * @param {string} [config.PersonID=]
+     * @param {string} [config.AccessToken]
+     * @param {number} [config.FBID]
+     * @param {number} [config.UserID]
+     * @param {string} [config.PersonID]
      */
     getUser: function getUser(config) {},
     getWebviewOptions: function getWebviewOptions() {},
@@ -930,11 +972,11 @@ var chayns = {
      * @returns {Promise}
      * @param {Object} config
      * @param {string} config.url
-     * @param {string} [config.title=]
-     * @param {boolean} [config.exclusiveView=],
-     * @param {boolean} [config.darkenBackground=],
-     * @param {boolean} [config.fullSize=],
-     * @param {number} [config.width=]
+     * @param {string} [config.title]
+     * @param {boolean} [config.exclusiveView],
+     * @param {boolean} [config.darkenBackground],
+     * @param {boolean} [config.fullSize],
+     * @param {number} [config.width]
      */
     openUrl: function openUrl(config) {},
 
@@ -1034,11 +1076,11 @@ var chayns = {
 
     /**
      * @param {Object} tapp
-     * @param {number} [tapp.tappId=]
-     * @param {string} [tapp.showName=]
-     * @param {string} [tapp.internalName=]
-     * @param {string} [tapp.siteId=]
-     * @param {string} [parameter=]
+     * @param {number} [tapp.tappId]
+     * @param {string} [tapp.showName]
+     * @param {string} [tapp.internalName]
+     * @param {string} [tapp.siteId]
+     * @param {string} [parameter]
      */
     selectTapp: function selectTapp(tapp, parameter) {},
     sendEventToTopFrame: function sendEventToTopFrame(param) {},
@@ -1119,8 +1161,8 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {string} [text=]
-     * @param {number} [textTimeout=]
+     * @param {string} [text]
+     * @param {number} [textTimeout]
      */
     showWaitCursor: function showWaitCursor(text, textTimeout) {},
     updateChaynsId: function updateChaynsId(param) {},
