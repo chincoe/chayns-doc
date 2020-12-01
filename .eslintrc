@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "jquery": false,
+    "es6": true
+  },
+  "globals": {
+    "chayns": true,
+    "__DEV__": true,
+    "__STAGING__": true,
+    "__LIVE__": true,
+    "__DEVELOPMENT__": true,
+    "__QA__": true,
+    "__PROD__": true,
+    "__PRODUCTION__": true
+  },
+  "plugins": [
+    "jsdoc"
+  ],
+  "rules": {
+    "react-hooks/rules-of-hooks": "warn",
+    "max-len": ["warn", 120],
+    "linebreak-style": "off",
+    "indent": 0,
+    "strict": 0,
+    "comma-dangle": "off"
+  },
+  "extends": "airbnb"
+}

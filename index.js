@@ -1,48 +1,7 @@
 "use strict";
 
-/* eslint-disable no-unused-vars,no-underscore-dangle */
+/* eslint-disable no-unused-vars */
 
-/**
- * @type {boolean}
- * @public
- */
-var __LIVE__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __DEVELOPMENT__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __DEV__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __STAGING__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __QA__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __PROD__ = true;
-/**
- * @type {boolean}
- * @public
- */
-
-var __PRODUCTION__ = true;
 /**
  * @typedef userResult
  * @property {number} Type
@@ -708,10 +667,8 @@ var __PRODUCTION__ = true;
  *      createFromClientCart()
  *   }}
  * }}
-
  */
-
-var chayns = {
+const chayns = {
     /**
      * @returns {Promise}
      */
@@ -948,7 +905,7 @@ var chayns = {
 
     /**
      * @returns {Promise<undefined>}
-     * @param {logoutType|0|1} [type=0]
+     * @param {logoutType} [type=0]
      */
     logout: function logout(type) {},
 
@@ -1094,7 +1051,7 @@ var chayns = {
 
     /**
      * @returns {Promise}
-     * @param {number|0|1|2} orientation
+     * @param {number} orientation
      */
     setScreenOrientation: function setScreenOrientation(orientation) {},
 
@@ -1205,27 +1162,29 @@ var chayns = {
             locationPersonId: '143-58397',
             title: 'nboDev',
             language: 'de',
-            tapps: [{
-                id: 502162,
-                showName: 'Verbindungen',
-                internalName: 'Tapps502162',
-                isSubTapp: false,
-                sortId: -15001,
-                customUrl: 'id/connections',
-                isHiddenFromMenu: false,
-                icon: 'ts-chayns',
-                iconType: 0
-            }, {
-                id: -7,
-                showName: 'chayns.iD',
-                internalName: 'Tapps-2',
-                isSubTapp: false,
-                sortId: -10000,
-                customUrl: 'tapp/-7',
-                isHiddenFromMenu: false,
-                icon: 'ts-fingerprint',
-                iconType: 0
-            }],
+            tapps: [
+                {
+                    id: 502162,
+                    showName: 'Verbindungen',
+                    internalName: 'Tapps502162',
+                    isSubTapp: false,
+                    sortId: -15001,
+                    customUrl: 'id/connections',
+                    isHiddenFromMenu: false,
+                    icon: 'ts-chayns',
+                    iconType: 0
+                }, {
+                    id: -7,
+                    showName: 'chayns.iD',
+                    internalName: 'Tapps-2',
+                    isSubTapp: false,
+                    sortId: -10000,
+                    customUrl: 'tapp/-7',
+                    isHiddenFromMenu: false,
+                    icon: 'ts-fingerprint',
+                    iconType: 0
+                }
+            ],
             facebookPageId: null,
             color: '#000000',
             colorMode: 1,
@@ -1263,19 +1222,21 @@ var chayns = {
             id: 2062159,
             personId: '',
             tobitAccessToken: '',
-            groups: [{
-                id: 1,
-                isActive: false
-            }, {
-                id: 75940,
-                isActive: false
-            }, {
-                id: 76145,
-                isActive: false
-            }, {
-                id: 76242,
-                isActive: false
-            }],
+            groups: [
+                {
+                    id: 1,
+                    isActive: false
+                }, {
+                    id: 75940,
+                    isActive: false
+                }, {
+                    id: 76145,
+                    isActive: false
+                }, {
+                    id: 76242,
+                    isActive: false
+                }
+            ],
             isAuthenticated: true,
             adminMode: false,
             isAdmin: true
@@ -1687,7 +1648,12 @@ var chayns = {
             IMAGE: 'image',
             VIDEO: 'video',
             AUDIO: 'audio',
-            DOCUMENT: ['application/x-latex', 'application/x-tex', 'text/', 'application/json', 'application/pdf', 'application/msword', 'application/msexcel', 'application/mspowerpoint', 'application/vnd.ms-word', 'application/vnd.ms-excel', 'application/vnd.ms-powerpoint', 'application/vnd.openxmlformats-officedocument', 'application/vnd.oasis.opendocument']
+            DOCUMENT: [
+                'application/x-latex', 'application/x-tex', 'text/', 'application/json', 'application/pdf',
+                'application/msword', 'application/msexcel', 'application/mspowerpoint', 'application/vnd.ms-word',
+                'application/vnd.ms-excel', 'application/vnd.ms-powerpoint',
+                'application/vnd.openxmlformats-officedocument', 'application/vnd.oasis.opendocument'
+            ]
         }
     },
     urlType: {
@@ -1835,10 +1801,12 @@ var chayns = {
                 expires: 1000000000000,
                 fullname: '',
                 firstname: '',
-                articles: [{
-                    id: 0,
-                    amount: 1
-                }]
+                articles: [
+                    {
+                        id: 0,
+                        amount: 1
+                    }
+                ]
             },
             cartCount: 1,
             exp: 100000000000000,
@@ -1886,14 +1854,11 @@ var chayns = {
         admin: {
             branch: {
                 /**
-                 * @param {string} field
-                 * @param {string} value
-                 * @param _ref
+                 * @param {Object} options
+                 * @param {string} options.field
+                 * @param {string} options.value
                  */
-                updateText: function updateText(_ref) {
-                    var field = _ref.field,
-                        value = _ref.value;
-                }
+                updateText(options) {}
             },
             accounting: function accounting() {},
             article: function article() {},
