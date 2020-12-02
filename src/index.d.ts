@@ -23,6 +23,72 @@ export interface Chayns {
     mimeType: MIMEType;
     event: Event;
     intercom: Event;
+
+    activateAdminMode(): Promise<any>;
+
+    deactivateAdminMode(): Promise<any>;
+
+    addAccessTokenChangeListener(callback: () => any): boolean;
+
+    removeAccessTokenChangeListener(callback: () => any): boolean;
+
+    addAdminSwitchListener(callback: (result: { mode: number }) => any): boolean;
+
+    removeAdminSwitchListener(callback: (result: { mode: number }) => any): boolean;
+
+    addGeoLocationListener(callback: (geoLocation: { latitude: number, longitude: number, speed: number, accuracy: number }) => any): void;
+
+    removeGeoLocationListener(callback: (geoLocation: { latitude: number, longitude: number, speed: number, accuracy: number }) => any): void;
+
+    addOnActivateListener(callback: () => any): boolean;
+
+    removeOnActivateListener(callback: () => any): boolean;
+
+    addWindowMetricsListener(callback: (windowHeight: number) => any): boolean;
+
+    removeWindowMetricsListener(callback: (windowHeight: number) => any): boolean;
+
+    allowRefreshScroll(): Promise<any>;
+
+    disallowRefreshScroll(): Promise<any>;
+
+    enableDisplayTimeout(): Promise<any>;
+
+    disableDisplayTimeout(): Promise<any>;
+
+    getGeoLocation(): Promise<{ latitude: number, longitude: number, speed: number, accuracy: number }>;
+
+    getUser(info: { AccessToken?: string, FBID?: number, UserID?: number, PersonID?: string }): Promise<{ Type: number, PersonID: string, FacebookID: number, FirstName: string, UserID: number, LastName: string, ChaynsLogin: string, UserFullName: string }>
+
+    getWindowMetrics(): Promise<{ pageYOffset: number, windowHeight: number, frameX: number, frameY: number, scrollTop: number, height: number }>;
+
+    hideTitleImage(): Promise<any>;
+
+    invokeCall(config: Object): Promise<any>;
+
+    showWaitCursor(text?: string, textTimeout?: number): Promise<any>;
+
+    hideWaitCursor(): Promise<any>;
+
+    login(parameters?: string): Promise<{ loginState: number }>;
+
+    logout(logoutType?: number): Promise<any>;
+
+    openImage(urls: string | string[], start?: number): Promise<undefined>;
+
+    openUrlInBrowser(url: string): Promise<Window>;
+
+    refreshAccessToken(): Promise<any>;
+
+    scanQRCode(cameraType?: number, timeout?: number): Promise<any>;
+
+    scrollToY(position: number);
+
+    selectTapp(tapp: { tappId?: number, showName?: string, internalName?: string, siteId?: string, parameter?: string });
+
+    setHeight(config: { height?: number, growOnly?: boolean, full?: boolean, fullViewport?: boolean, forceHeight?: boolean }): Promise<any>;
+
+    vibrate(pattern: number[], iOSFeedbackVibration?: number);
 }
 
 export interface AdminSwitchStatus {
@@ -48,6 +114,78 @@ export interface Dialog {
     dateType: DateType;
     inputType: InputType;
     fileType: FileType;
+
+    alert(headline: string, text: string): Promise<Object>;
+
+    confirm(headline: string, text: string, buttons?: Object[]): Promise<number>;
+
+    input(config: {
+        title?: string,
+        message?: string,
+        placeholderText?: string,
+        text?: string,
+        textColor?: string,
+        buttons?: Object[],
+        type?: number,
+        regex?: string
+        formatter?: Function,
+        pattern?: string,
+        disableButtonTypes?: number[]
+    }): Promise<{ buttonType: number, text: string }>;
+
+    select(config: {
+        title?: string,
+        message?: string,
+        list: Array<{ name: string, value: string | number | object, backgroundColor?: string, className?: string, url?: string, isSelected?: boolean }>,
+        multiselect?: boolean,
+        quickfind?: boolean,
+        type?: number,
+        preventCloseOnClick?: boolean,
+        buttons?: Object[],
+        selectAllButton?: string
+    }): Promise<{ buttonType: number, selection: Array<{ name: string, value: string | number | object }> }>
+
+    date(config: object): Promise<object>;
+
+    advancedDate(config: {
+        title?: string,
+        message?: string,
+        buttons?: object[],
+        minDate?: Date | number,
+        maxDate?: Date | number,
+        minuteInterval?: number,
+        preSelect?: Date | Date[] | number[] | { start: Date | number, end: Date | number },
+        multiselect?: boolean,
+        disabledDate?: Date[] | number[],
+        textBocks?: object[],
+        yearSelect?: boolean,
+        monthSelect?: boolean,
+        interval?: boolean,
+        minInterval?: number,
+        maxInterval?: number,
+        disabledIntervals?: Array<{ start: Date | number, end: Date | number }>
+        disabledWeekDayIntervals?: Array<any>;
+        getLocalTime?: boolean,
+        dateType?: number
+    }): Promise<{ buttonType: number, selectedDates: Array<{ timestamp: number, isSelected: boolean }> }>;
+
+    mediaSelect(config: object): Promise<object>;
+
+    fileSelect(config: object): Promise<object>;
+
+    iFrame(config: {
+        url: string,
+        input?: object,
+        buttons?: object[],
+        seamless?: boolean,
+        transparent?: boolean,
+        waitCursor?: boolean,
+        maxHeight?: string,
+        width?: number,
+        customTransitionTimeout?: number
+    }): Promise<any>;
+
+    close(buttonType?: number);
 }
 
 export interface ButtonText {
@@ -120,7 +258,8 @@ export interface Env {
     apiVersion: number;
 }
 
-export interface Event {}
+export interface Event {
+}
 
 export interface Browser {
     name: string;
@@ -255,9 +394,73 @@ export interface URLType {
     AR: number;
 }
 
+export interface Colors {
+    getColorFromPalette(name: string): string;
+
+    mix(hex1: string, hex2: string, saturation?: number): string
+}
+
+export interface LocalStorage {
+    get(key: string): string
+
+    remove(key: string);
+
+    removeAll();
+
+    set(key: string, value: string);
+}
+
 export interface Utils {
-    colors: Event;
-    ls: Event;
+    colors: Colors;
+    ls: LocalStorage;
     lang: Event;
     translate: Event;
+
+    isArray(param: any): boolean;
+
+    isBLEAddress(param: any): boolean;
+
+    isBlank(param: any): boolean;
+
+    isBoolean(param: any): boolean;
+
+    isDate(param: any): boolean;
+
+    isDeferred(param: any): boolean;
+
+    isDefined(param: any): boolean;
+
+    isDialogPermitted(param: any): boolean;
+
+    isFormData(param: any): boolean;
+
+    isFormElement(param: any): boolean;
+
+    isFunction(param: any): boolean;
+
+    isGUID(param: any): boolean;
+
+    isHex(param: any): boolean;
+
+    isJwt(param: any): boolean;
+
+    isMacAddress(param: any): boolean;
+
+    isNumber(param: any): boolean;
+
+    isObject(param: any): boolean;
+
+    isPermitted(param: any): boolean;
+
+    isPresent(param: any): boolean;
+
+    isPromise(param: any): boolean;
+
+    isString(param: any): boolean;
+
+    isUUID(param: any): boolean;
+
+    isUndefined(param: any): boolean;
+
+    isUrl(param: any): boolean;
 }
