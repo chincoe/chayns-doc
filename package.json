@@ -1,10 +1,11 @@
 {
   "name": "chayns-doc",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "description": "A documentation for the global chayns object for chayns development",
   "main": "src/index.js",
   "files": [
-    "dist/"
+    "dist/index.d.ts",
+    "dist/index.js"
   ],
   "scripts": {
     "pub": "npm publish",
