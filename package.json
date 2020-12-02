@@ -1,6 +1,6 @@
 {
   "name": "chayns-doc",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.4",
   "description": "A documentation for the global chayns object for chayns development",
   "main": "src/index.js",
   "files": [
@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "pub": "npm publish",
+    "prepublishOnly": "copy \"src/\" \"dist/\" /y",
     "generate:ts": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/index.js"
   },
   "repository": {
