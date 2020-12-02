@@ -38,9 +38,9 @@ export interface Chayns {
 
     removeAdminSwitchListener(callback: (result: { mode: number }) => any): boolean;
 
-    addGeoLocationListener(callback: (geoLocation: { latitude: number, longitude: number, speed: number, accuracy: number }) => any): void;
+    addGeoLocationListener(callback: (geoLocation: GeoLocation) => any): void;
 
-    removeGeoLocationListener(callback: (geoLocation: { latitude: number, longitude: number, speed: number, accuracy: number }) => any): void;
+    removeGeoLocationListener(callback: (geoLocation: GeoLocation) => any): void;
 
     addOnActivateListener(callback: () => any): boolean;
 
@@ -58,11 +58,11 @@ export interface Chayns {
 
     disableDisplayTimeout(): Promise<any>;
 
-    getGeoLocation(): Promise<{ latitude: number, longitude: number, speed: number, accuracy: number }>;
+    getGeoLocation(): Promise<GeoLocation>;
 
-    getUser(info: { AccessToken?: string, FBID?: number, UserID?: number, PersonID?: string }): Promise<{ Type: number, PersonID: string, FacebookID: number, FirstName: string, UserID: number, LastName: string, ChaynsLogin: string, UserFullName: string }>
+    getUser(info: GetUserConfig): Promise<GetUserResult>;
 
-    getWindowMetrics(): Promise<{ pageYOffset: number, windowHeight: number, frameX: number, frameY: number, scrollTop: number, height: number }>;
+    getWindowMetrics(): Promise<WindowMetrics>;
 
     hideTitleImage(): Promise<any>;
 
@@ -86,12 +86,24 @@ export interface Chayns {
 
     scrollToY(position: number);
 
-    selectTapp(tapp: { tappId?: number, showName?: string, internalName?: string, siteId?: string, parameter?: string });
+    selectTapp(tapp: SelectTappConfig);
 
-    setHeight(config: { height?: number, growOnly?: boolean, full?: boolean, fullViewport?: boolean, forceHeight?: boolean }): Promise<any>;
+    setHeight(config: SetHeightConfig): Promise<any>;
 
     vibrate(pattern: number[], iOSFeedbackVibration?: number);
 }
+
+export interface SetHeightConfig { height?: number, growOnly?: boolean, full?: boolean, fullViewport?: boolean, forceHeight?: boolean }
+
+export interface SelectTappConfig { tappId?: number, showName?: string, internalName?: string, siteId?: string, parameter?: string }
+
+export interface WindowMetrics { pageYOffset: number, windowHeight: number, frameX: number, frameY: number, scrollTop: number, height: number }
+
+export interface GetUserResult { Type: number, PersonID: string, FacebookID: number, FirstName: string, UserID: number, LastName: string, ChaynsLogin: string, UserFullName: string }
+
+export interface GetUserConfig { AccessToken?: string, FBID?: number, UserID?: number, PersonID?: string }
+
+export interface GeoLocation { latitude: number, longitude: number, speed: number, accuracy: number }
 
 export interface AdminSwitchStatus {
     ADMIN: number;
@@ -109,6 +121,14 @@ export interface CameryType {
     FRONT: number;
 }
 
+export interface DialogButton {
+    text: buttonText|string,
+    buttonType: buttonType|number,
+    collapseTime?: number,
+    textColor?: string,
+    backgroundColor?: string
+}
+
 export interface Dialog {
     buttonText: ButtonText;
     buttonType: ButtonType;
@@ -119,8 +139,7 @@ export interface Dialog {
 
     alert(headline: string, text: string): Promise<Object>;
 
-    // TODO: Buttons Interface
-    confirm(headline: string, text: string, buttons?: Object[]): Promise<number>;
+    confirm(headline: string, text: string, buttons?: DialogButton[]): Promise<number>;
 
     input(config: {
         title?: string,
@@ -128,26 +147,25 @@ export interface Dialog {
         placeholderText?: string,
         text?: string,
         textColor?: string,
-        buttons?: Object[],
-        type?: number,
+        buttons?: DialogButton[],
+        type?: inputType|number,
         regex?: string
         formatter?: Function,
         pattern?: string,
         disableButtonTypes?: number[]
-    }): Promise<{ buttonType: number, text: string }>;
+    }): Promise<InputDialogResult>;
 
     select(config: {
         title?: string,
         message?: string,
-        // TODO: list item interface
-        list: Array<{ name: string, value: string | number | object, backgroundColor?: string, className?: string, url?: string, isSelected?: boolean }>,
+        list: Array<SelectDialogItem>,
         multiselect?: boolean,
         quickfind?: boolean,
         type?: number,
         preventCloseOnClick?: boolean,
-        buttons?: Object[],
+        buttons?: DialogButton[],
         selectAllButton?: string
-    }): Promise<{ buttonType: number, selection: Array<{ name: string, value: string | number | object }> }>
+    }): Promise<SelectDialogResult>
 
     // TODO: date dialog
     date(config: object): Promise<object>;
@@ -155,12 +173,11 @@ export interface Dialog {
     advancedDate(config: {
         title?: string,
         message?: string,
-        buttons?: object[],
+        buttons?: DialogButton[],
         minDate?: Date | number,
         maxDate?: Date | number,
         minuteInterval?: number,
-        // TODO: intervalItem interface
-        preSelect?: Date | Date[] | number[] | { start: Date | number, end: Date | number },
+        preSelect?: Date | Date[] | number[] | IntervalItem,
         multiselect?: boolean,
         disabledDate?: Date[] | number[],
         textBocks?: object[],
@@ -169,11 +186,11 @@ export interface Dialog {
         interval?: boolean,
         minInterval?: number,
         maxInterval?: number,
-        disabledIntervals?: Array<{ start: Date | number, end: Date | number }>
+        disabledIntervals?: Array<IntervalItem>
         disabledWeekDayIntervals?: Array<any>;
         getLocalTime?: boolean,
-        dateType?: number
-    }): Promise<{ buttonType: number, selectedDates: Array<{ timestamp: number, isSelected: boolean }> }>;
+        dateType?: dateType|number
+    }): Promise<AdvancedDateDialogResult>;
 
     // TODO media dialog
     mediaSelect(config: object): Promise<object>;
@@ -183,7 +200,7 @@ export interface Dialog {
     iFrame(config: {
         url: string,
         input?: object,
-        buttons?: object[],
+        buttons?: DialogButton[],
         seamless?: boolean,
         transparent?: boolean,
         waitCursor?: boolean,
@@ -194,7 +211,22 @@ export interface Dialog {
 
     close(buttonType?: number);
 
-    // TODO: Iframe data listener etc.
+    sendData(data: object, isApiEvent?: boolean);
+    addDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+    removeDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+}
+
+export interface AdvancedDateDialogResult { buttonType: number, selectedDates: Array<{ timestamp: number, isSelected: boolean }> }
+
+export interface IntervalItem { start: Date | number, end: Date | number }
+
+export interface SelectDialogItem { name: string, value: string | number | object, backgroundColor?: string, className?: string, url?: string, isSelected?: boolean }
+
+export interface SelectDialogResult {buttonType: buttonType|number, selection: Array<SelectDialogItem>}
+
+export interface InputDialogResult {
+    buttonType: buttonType|number,
+    text: string
 }
 
 export interface ButtonText {
@@ -204,10 +236,23 @@ export interface ButtonText {
     CANCEL: string;
 }
 
+declare enum buttonText {
+    CANCEL = 'Abbrechen',
+    NO = 'Nein',
+    OK = 'OK',
+    YES = 'Ja'
+}
+
 export interface ButtonType {
     CANCEL: number;
     NEGATIVE: number;
     POSITIVE: number;
+}
+
+declare enum buttonType {
+    CANCEL = -1,
+    NEGATIVE = 0,
+    POSITIVE = 1
 }
 
 export interface DateType {
@@ -215,6 +260,18 @@ export interface DateType {
     TIME: number;
     DATE_TIME: number;
 }
+
+declare enum dateType {
+    DATE,
+    TIME,
+    DATE_TIME
+}
+
+declare enum inputType {
+    DEFAULT = 0,
+    PASSWORD = 1
+}
+
 
 export interface FileType {
     IMAGE: string;
