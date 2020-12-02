@@ -1,4 +1,6 @@
-declare const chayns: Chayns;
+declare global {
+    var chayns: Chayns;
+}
 
 export interface Chayns {
     ready: Promise<void>;
