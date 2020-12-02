@@ -2,6 +2,8 @@ declare global {
     var chayns: Chayns;
 }
 
+// TODO: smartshop
+// TODO: editor
 export interface Chayns {
     ready: Promise<void>;
     env: Env;
@@ -117,6 +119,7 @@ export interface Dialog {
 
     alert(headline: string, text: string): Promise<Object>;
 
+    // TODO: Buttons Interface
     confirm(headline: string, text: string, buttons?: Object[]): Promise<number>;
 
     input(config: {
@@ -136,6 +139,7 @@ export interface Dialog {
     select(config: {
         title?: string,
         message?: string,
+        // TODO: list item interface
         list: Array<{ name: string, value: string | number | object, backgroundColor?: string, className?: string, url?: string, isSelected?: boolean }>,
         multiselect?: boolean,
         quickfind?: boolean,
@@ -145,6 +149,7 @@ export interface Dialog {
         selectAllButton?: string
     }): Promise<{ buttonType: number, selection: Array<{ name: string, value: string | number | object }> }>
 
+    // TODO: date dialog
     date(config: object): Promise<object>;
 
     advancedDate(config: {
@@ -154,6 +159,7 @@ export interface Dialog {
         minDate?: Date | number,
         maxDate?: Date | number,
         minuteInterval?: number,
+        // TODO: intervalItem interface
         preSelect?: Date | Date[] | number[] | { start: Date | number, end: Date | number },
         multiselect?: boolean,
         disabledDate?: Date[] | number[],
@@ -169,8 +175,9 @@ export interface Dialog {
         dateType?: number
     }): Promise<{ buttonType: number, selectedDates: Array<{ timestamp: number, isSelected: boolean }> }>;
 
+    // TODO media dialog
     mediaSelect(config: object): Promise<object>;
-
+    // TODO: file dialog
     fileSelect(config: object): Promise<object>;
 
     iFrame(config: {
@@ -186,6 +193,8 @@ export interface Dialog {
     }): Promise<any>;
 
     close(buttonType?: number);
+
+    // TODO: Iframe data listener etc.
 }
 
 export interface ButtonText {
