@@ -598,7 +598,12 @@ export interface Env {
 }
 
 export interface App {
-    flavor: any
+    flavor: any,
+    languageId: string;
+    model: string;
+    name: string;
+    uid: string;
+    version: string;
 }
 
 export interface Lang {
