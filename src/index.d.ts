@@ -2,7 +2,6 @@ declare global {
     var chayns: Chayns;
 }
 
-// TODO: smartshop
 export interface Chayns {
     ready: Promise<void>;
     env: Env;
@@ -297,66 +296,80 @@ export interface Dialog {
     inputType: InputType;
     fileType: FileType;
 
-    alert(headline: string, text: string): Promise<Object>;
+    alert(headline: string, text: string): Promise<void>;
 
-    confirm(headline: string, text: string, buttons?: DialogButton[]): Promise<number>;
+    confirm(
+        headline: string,
+        text: string,
+        buttons?: DialogButton[]
+    ): Promise<number>;
 
     input(config: {
-        title?: string,
-        message?: string,
-        placeholderText?: string,
-        text?: string,
-        textColor?: string,
-        buttons?: DialogButton[],
-        type?: inputType | number,
-        regex?: string
-        formatter?: Function,
-        pattern?: string,
-        disableButtonTypes?: number[]
+        title?: string;
+        message?: string;
+        placeholderText?: string;
+        text?: string;
+        textColor?: string;
+        buttons?: DialogButton[];
+        type?: inputType | number;
+        regex?: string;
+        formatter?: Function;
+        pattern?: string;
+        disableButtonTypes?: number[];
     }): Promise<InputDialogResult>;
 
     select(config: {
-        title?: string,
-        message?: string,
-        list: Array<SelectDialogItem>,
-        multiselect?: boolean,
-        quickfind?: boolean,
-        type?: selectType,
-        preventCloseOnClick?: boolean,
-        buttons?: DialogButton[],
-        selectAllButton?: string
+        title?: string;
+        message?: string;
+        list: Array<SelectDialogItem>;
+        multiselect?: boolean;
+        quickfind?: boolean;
+        type?: selectType;
+        preventCloseOnClick?: boolean;
+        buttons?: DialogButton[];
+        selectAllButton?: string;
     }): Promise<SelectDialogResult>
 
-    // TODO: date dialog
     date(config: object): Promise<object>;
 
     advancedDate(config: {
-        title?: string,
-        message?: string,
-        buttons?: DialogButton[],
-        minDate?: Date | number,
-        maxDate?: Date | number,
-        minuteInterval?: number,
-        preSelect?: Date | Date[] | number[] | IntervalItem,
-        multiselect?: boolean,
-        disabledDate?: Date[] | number[],
-        textBocks?: object[],
-        yearSelect?: boolean,
-        monthSelect?: boolean,
-        interval?: boolean,
-        minInterval?: number,
-        maxInterval?: number,
-        disabledIntervals?: Array<IntervalItem>
-        disabledWeekDayIntervals?: Array<any>;
-        getLocalTime?: boolean,
-        dateType?: dateType | number
+        title?: string;
+        message?: string;
+        buttons?: DialogButton[];
+        minDate?: Date | number;
+        maxDate?: Date | number;
+        minuteInterval?: number;
+        preSelect?: Date | Date[] | number[] | IntervalItem;
+        multiselect?: boolean;
+        disabledDate?: Date[] | number[];
+        textBocks?: DialogTextBlock[];
+        yearSelect?: boolean;
+        monthSelect?: boolean;
+        interval?: boolean;
+        minInterval?: number;
+        maxInterval?: number;
+        disabledIntervals?: Array<IntervalItem>;
+        disabledWeekDayIntervals?: Array<WeekDayIntervalObject>[7];
+        getLocalTime?: boolean;
+        dateType?: dateType | number;
     }): Promise<AdvancedDateDialogResult>;
 
-    // TODO media dialog
-    mediaSelect(config: object): Promise<object>;
+    mediaSelect(config: {
+        title?: string
+        message?: string
+        multiSelect?: boolean
+        buttons?: DialogButton[]
+    }): Promise<any>;
 
-    // TODO: file dialog
-    fileSelect(config: object): Promise<object>;
+    fileSelect(config: {
+        title?: string;
+        message?: string;
+        multiselect?: boolean;
+        buttons?: DialogButton[];
+        contentType?: Array<string>;
+        exclude?: Array<string>;
+        directory?: boolean;
+    }): Promise<any>;
 
     iFrame(config: {
         url: string,
@@ -390,6 +403,17 @@ export interface Dialog {
 export interface AdvancedDateDialogResult {
     buttonType: number,
     selectedDates: Array<{ timestamp: number, isSelected: boolean }>
+}
+
+export interface DialogTextBlock {
+    headline: string;
+    text: string;
+    position: string;
+}
+
+export interface WeekDayIntervalObject {
+    start: number;
+    end: number;
 }
 
 export interface IntervalItem {
@@ -653,6 +677,7 @@ declare enum networkType {
 
 export interface Event {
     addPushListener(callback: () => any);
+
     removePushListener(callback: () => any);
 }
 
@@ -890,8 +915,10 @@ export interface Intercom {
     sendMessageToGroup(groupId: number, config: {
         text: string
     }): Promise<Response>;
-    sendMessageToPage(config: {text: string}): Promise<Response>;
-    sendMessageToUser(userId: number, config: {text: string})
+
+    sendMessageToPage(config: { text: string }): Promise<Response>;
+
+    sendMessageToUser(userId: number, config: { text: string })
 }
 
 export interface SmartShopArticle {
@@ -901,6 +928,7 @@ export interface SmartShopArticle {
 
 export interface SmartShop {
     init(config: object): any;
+
     offer: {
         getCategories(): any;
         getCategory(categoryId: number): any;
@@ -917,7 +945,7 @@ export interface SmartShop {
             cartPrice: number;
             voucherList: Array<any>;
             personId: string;
-            tipSum:number;
+            tipSum: number;
             expires: number;
             fullname: string;
             firstname: string;
@@ -942,12 +970,12 @@ export interface SmartShop {
     tapp: {
         gotoCart(...params: any): any;
         gotoShop(...params: any): any;
-        configure(config: {customShopUrl: string}): any;
+        configure(config: { customShopUrl: string }): any;
         showFloatingButton(value?: any): any;
     }
     admin: {
         branch: {
-            updateText(options: {field: string, value: string}): any;
+            updateText(options: { field: string, value: string }): any;
         }
         accounting(...params: any): any;
         article(...params: any): any;
