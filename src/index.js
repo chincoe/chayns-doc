@@ -99,8 +99,18 @@
  */
 
 /**
- * @typedef findPersonResult {{Status: {ResultCode: number, ResultText: string, Exception: undefined}, Value:
- *     Array.<{name: string, personId: string, facebookId: number, lastLoginTime: string, currentLocationId: number}>}}
+ * @typedef findPersonResult {
+ * {Status: {
+ * ResultCode: number,
+ * ResultText: string,
+ * Exception: undefined
+ * }, Value:
+ *     Array.<{name: string,
+ *     personId: string,
+ *     facebookId: number,
+ *     lastLoginTime: string,
+ *     currentLocationId: number
+ *     }>}}
  */
 
 /**

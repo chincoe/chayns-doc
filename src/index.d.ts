@@ -3,7 +3,6 @@ declare global {
 }
 
 // TODO: smartshop
-// TODO: editor
 export interface Chayns {
     ready: Promise<void>;
     env: Env;
@@ -24,7 +23,8 @@ export interface Chayns {
     orientation: Orientation;
     mimeType: MIMEType;
     event: Event;
-    intercom: Event;
+    intercom: Intercom;
+    smartShop: SmartShop;
 
     activateAdminMode(): Promise<any>;
 
@@ -42,9 +42,21 @@ export interface Chayns {
 
     removeGeoLocationListener(callback: (geoLocation: GeoLocation) => any): void;
 
+    addNetworkChangeListener(callback: () => any): boolean;
+
+    removeNetworkChangeListener(callback: () => any): boolean;
+
+    addNfcListener(callback: (param: any) => any);
+
+    removeNfcListener(callback: (param: any) => any);
+
     addOnActivateListener(callback: () => any): boolean;
 
     removeOnActivateListener(callback: () => any): boolean;
+
+    addScrollListener(callback: () => any);
+
+    removeScrollListener(callback: () => any);
 
     addWindowMetricsListener(callback: (windowHeight: number) => any): boolean;
 
@@ -54,17 +66,69 @@ export interface Chayns {
 
     disallowRefreshScroll(): Promise<any>;
 
+    appendUrlParameter(parameters: object, override?: boolean): Promise<any>;
+
+    closeUrl(): Promise<undefined>;
+
+    cancelScanQrCode(): Promise<undefined>;
+
+    createQRCode(url: string): Promise<string>;
+
+    dynamicFontSize();
+
     enableDisplayTimeout(): Promise<any>;
 
     disableDisplayTimeout(): Promise<any>;
 
+    findPerson(name: string): Promise<FindPersonResult>;
+
+    findSite(name: string): Promise<FindSiteResult>;
+
+    getAvailableSharingServices(name: string): Promise<GetSharingServicesResult>
+
     getGeoLocation(): Promise<GeoLocation>;
+
+    getGlobalData(): Promise<{
+        site: Site,
+        app: object,
+        device: object,
+        user: User
+    }>
+
+    getLastPushNotification(): Promise<any>;
+
+    getNetworkStatus(): Promise<any>;
+
+    getWebviewOptions(): Promise<any>;
 
     getUser(info: GetUserConfig): Promise<GetUserResult>;
 
     getWindowMetrics(): Promise<WindowMetrics>;
 
+    hideBackButton(): Promise<void>;
+
+    showBackButton(param?: any): Promise<void>;
+
+    hideFloatingButton(): Promise<void>;
+
+    showFloatingButton(config: {
+        callback?: () => any,
+        text?: string,
+        color?: string,
+        colorText?: string,
+        icon?: string,
+        position?: number
+    }, onClick?: () => any): Promise<void>;
+
+    showOverlay(color?: string, transition?: string): Promise<void>;
+
+    hideOverlay(): Promise<void>;
+
+    showSnackbar(param?: any): any;
+
     hideTitleImage(): Promise<any>;
+
+    showTitleImage(): Promise<any>;
 
     invokeCall(config: Object): Promise<any>;
 
@@ -72,15 +136,34 @@ export interface Chayns {
 
     hideWaitCursor(): Promise<any>;
 
-    login(parameters?: string): Promise<{ loginState: number }>;
+    login(parameters?: string): Promise<{ loginState: 0 | 1 | 2 | 3 }>;
 
-    logout(logoutType?: number): Promise<any>;
+    logout(logoutType?: 0 | 1): Promise<any>;
 
     openImage(urls: string | string[], start?: number): Promise<undefined>;
 
+    openUrl(config: {
+        url: string,
+        title?: string,
+        exclusiveView?: boolean,
+        darkenBackground?: boolean,
+        fullSize?: boolean
+        width?: number
+    }): Promise<void>
+
     openUrlInBrowser(url: string): Promise<Window>;
 
+    openVideo(url: string): Promise<void>;
+
     refreshAccessToken(): Promise<any>;
+
+    register(config: object): any;
+
+    removeSubTapp(config: {
+        tappID: number,
+        close?: boolean,
+        remove?: boolean
+    }): Promise<void>;
 
     scanQRCode(cameraType?: number, timeout?: number): Promise<any>;
 
@@ -88,22 +171,99 @@ export interface Chayns {
 
     selectTapp(tapp: SelectTappConfig);
 
+    sendEventToTopFrame(param: any): any;
+
     setHeight(config: SetHeightConfig): Promise<any>;
+
+    setScreenOrientation(orientation: ScreenOrientation | number): Promise<void>
+
+    setSubTapp(config: {
+        tappID: number,
+        name: string,
+        color: string,
+        colorText?: string,
+        sortID: number,
+        icon: string,
+        callbackURL?: (result: any) => any,
+        url: string,
+        buttonName: string,
+        isExclusiveView?: boolean,
+        replaceParent?: boolean,
+        boldText?: boolean
+    }): Promise<void>;
+
+    setWebviewOptions(param: any): any;
+
+    share(config: {
+        title: string,
+        text: string,
+        imageUrl: string,
+        sharingApp: number,
+        sharingAndroidApp: string
+    }): Promise<void>;
+
+    updateChaynsId(param: any): any;
+
+    updateTapp(param: any): any;
+
+    updateCloudImage(): any;
+
+    uploadFile(file: File, param1?: any, param2?: any): Promise<any>;
+
+    uploadToCloud(file: File, param?: any): Promise<any>
 
     vibrate(pattern: number[], iOSFeedbackVibration?: number);
 }
 
-export interface SetHeightConfig { height?: number, growOnly?: boolean, full?: boolean, fullViewport?: boolean, forceHeight?: boolean }
+export interface SetHeightConfig {
+    height?: number,
+    growOnly?: boolean,
+    full?: boolean,
+    fullViewport?: boolean,
+    forceHeight?: boolean
+}
 
-export interface SelectTappConfig { tappId?: number, showName?: string, internalName?: string, siteId?: string, parameter?: string }
+export interface SelectTappConfig {
+    tappId?: number,
+    showName?: string,
+    internalName?: string,
+    siteId?: string,
+    parameter?: string
+}
 
-export interface WindowMetrics { pageYOffset: number, windowHeight: number, frameX: number, frameY: number, scrollTop: number, height: number }
+export interface WindowMetrics {
+    pageYOffset: number,
+    windowHeight: number,
+    frameX: number,
+    frameY: number,
+    scrollTop: number,
+    height: number
+}
 
-export interface GetUserResult { Type: number, PersonID: string, FacebookID: number, FirstName: string, UserID: number, LastName: string, ChaynsLogin: string, UserFullName: string }
+export interface GetUserResult {
+    Type: number,
+    PersonID: string,
+    FacebookID: number,
+    FirstName: string,
+    UserID: number,
+    LastName: string,
+    ChaynsLogin: string,
+    UserFullName: string
+}
 
-export interface GetUserConfig { AccessToken?: string, FBID?: number, UserID?: number, PersonID?: string }
+export interface GetUserConfig {
+    AccessToken?: string,
+    FBID?: number,
+    UserID?: number,
+    PersonID?: string
+}
 
-export interface GeoLocation { latitude: number, longitude: number, speed: number, accuracy: number }
+export interface GeoLocation {
+    latitude: number,
+    longitude: number,
+    speed: number,
+    accuracy: number
+}
 
 export interface AdminSwitchStatus {
     ADMIN: number;
@@ -122,8 +282,8 @@ export interface CameryType {
 }
 
 export interface DialogButton {
-    text: buttonText|string,
-    buttonType: buttonType|number,
+    text: buttonText | string,
+    buttonType: buttonType | number,
     collapseTime?: number,
     textColor?: string,
     backgroundColor?: string
@@ -148,7 +308,7 @@ export interface Dialog {
         text?: string,
         textColor?: string,
         buttons?: DialogButton[],
-        type?: inputType|number,
+        type?: inputType | number,
         regex?: string
         formatter?: Function,
         pattern?: string,
@@ -161,7 +321,7 @@ export interface Dialog {
         list: Array<SelectDialogItem>,
         multiselect?: boolean,
         quickfind?: boolean,
-        type?: number,
+        type?: selectType,
         preventCloseOnClick?: boolean,
         buttons?: DialogButton[],
         selectAllButton?: string
@@ -189,11 +349,12 @@ export interface Dialog {
         disabledIntervals?: Array<IntervalItem>
         disabledWeekDayIntervals?: Array<any>;
         getLocalTime?: boolean,
-        dateType?: dateType|number
+        dateType?: dateType | number
     }): Promise<AdvancedDateDialogResult>;
 
     // TODO media dialog
     mediaSelect(config: object): Promise<object>;
+
     // TODO: file dialog
     fileSelect(config: object): Promise<object>;
 
@@ -212,21 +373,102 @@ export interface Dialog {
     close(buttonType?: number);
 
     sendData(data: object, isApiEvent?: boolean);
+
     addDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+
     removeDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+
+    setResult(result: any, register?: any);
+
+    addDialogResultListener(callback: (param: any) => any)
+
+    removeDialogResultListener(callback: (param: any) => any)
+
+    disableButtons(disable: boolean, buttonTypes: number[]);
 }
 
-export interface AdvancedDateDialogResult { buttonType: number, selectedDates: Array<{ timestamp: number, isSelected: boolean }> }
+export interface AdvancedDateDialogResult {
+    buttonType: number,
+    selectedDates: Array<{ timestamp: number, isSelected: boolean }>
+}
 
-export interface IntervalItem { start: Date | number, end: Date | number }
+export interface IntervalItem {
+    start: Date | number,
+    end: Date | number
+}
 
-export interface SelectDialogItem { name: string, value: string | number | object, backgroundColor?: string, className?: string, url?: string, isSelected?: boolean }
+export interface SelectDialogItem {
+    name: string,
+    value: string | number | object,
+    backgroundColor?: string,
+    className?: string,
+    url?: string,
+    isSelected?: boolean
+}
 
-export interface SelectDialogResult {buttonType: buttonType|number, selection: Array<SelectDialogItem>}
+export interface SelectDialogResult {
+    buttonType: buttonType | number,
+    selection: Array<SelectDialogItem>
+}
 
 export interface InputDialogResult {
-    buttonType: buttonType|number,
+    buttonType: buttonType | number,
     text: string
+}
+
+export interface GetSharingServicesResult {
+    retval: {
+        availableSharingApps: Array<sharingApp>
+    }
+}
+
+declare enum sharingApp {
+    MAIL = 0,
+    WHATSAPP = 1,
+    FACEBOOK = 2,
+    FACEBOOK_MESSENGER = 3,
+    GOOGLE_PLUS = 4,
+    TWITTER = 5,
+}
+
+declare enum ScreenOrientation {
+    DEFAULT = 0,
+    PORTRAIT = 1,
+    LANDSCAPE = 2,
+    PORTRAIT_SENSOR = 3,
+    LANDSCAPE_SENSOR = 4,
+    PORTRAIT_REVERSE = 5,
+    LANDSCAPE_REVERSE = 6,
+}
+
+export interface FindPersonResult {
+    Status: FindingStatus,
+    Value: Array<FindPersonResultValue>
+}
+
+export interface FindPersonResultValue {
+    name: string,
+    personId: string,
+    facebookId: number,
+    lastLoginTime: string,
+    currentLocationId: number
+}
+
+export interface FindSiteResult {
+    Status: FindingStatus,
+    Value: Array<FindSiteResultValue>
+}
+
+export interface FindSiteResultValue {
+    siteId: string,
+    locationId: number,
+    appstoreName: string
+}
+
+export interface FindingStatus {
+    ResultCode: number,
+    ResultString: string,
+    Exception: any
 }
 
 export interface ButtonText {
@@ -269,9 +511,16 @@ declare enum dateType {
 
 declare enum inputType {
     DEFAULT = 0,
-    PASSWORD = 1
+    PASSWORD = 1,
+    TEXTAREA = 2,
+    INPUT = 3,
+    NUMBER = 4
 }
 
+declare enum selectType {
+    DEFAULT = 0,
+    ICON = 1
+}
 
 export interface FileType {
     IMAGE: string;
@@ -294,14 +543,14 @@ export interface SelectType {
 }
 
 export interface Env {
-    parameters: Event;
-    _parameters: Event;
+    parameters: object;
+    _parameters: object;
     browser: Browser;
     language: string;
     site: Site;
     user: User;
-    app: Event;
-    device: Event;
+    app: App;
+    device: Device;
     isIOS: boolean;
     isAndroid: boolean;
     isWP: boolean;
@@ -324,7 +573,87 @@ export interface Env {
     apiVersion: number;
 }
 
+export interface App {
+    flavor: any
+}
+
+export interface Lang {
+    get(param?: any): string | any;
+
+    init(param?: any);
+
+    loadLib(config: {
+        libs: Array<{
+            project: string, middle: string
+        }>,
+        language: string,
+        preventOverride: boolean,
+        successCallback: () => any,
+        errorCallback: () => any
+    }, param?: any): any
+
+    renderTextString(param?: any);
+}
+
+export interface Translate {
+    init();
+}
+
+export interface ChaynsEditor {
+    disable(),
+
+    enable(),
+
+    enableToolbarChange(),
+
+    logger: ChaynsEditorLogger
+}
+
+export interface ChaynsEditorLogger {
+    log(param1?: any, param2?: any, param3?: any),
+
+    setLevel(level: number);
+
+    level: number
+}
+
+export interface Device {
+    deviceAccessToken: any,
+    dfaceVersion: any,
+    fontScale: any,
+    imei: any,
+    languageId: any,
+    minLogLevel: any,
+    model: any,
+    systemName: any,
+    uid: any,
+    version: any
+}
+
+declare enum networkType {
+    NO_NETWORK = 0,
+    NETWORK_TYPE_UNKNOWN = 1,
+    IDEN = 2,
+    GPRS = 3,
+    EGDE = 4,
+    CDMA_1xRTT = 5,
+    CDMA_EVDO_0 = 6,
+    CDMA_EVDO_A = 7,
+    CDMA_EVDO_B = 8,
+    UMTS = 9,
+    EHRPD = 10,
+    HSDPA = 11,
+    HSPA = 12,
+    HSPAP = 13,
+    HSUPA = 14,
+    LTE = 15,
+    WIFI = 16,
+    ETHERNET = 17,
+}
+
 export interface Event {
+    addPushListener(callback: () => any);
+    removePushListener(callback: () => any);
 }
 
 export interface Browser {
@@ -440,6 +769,12 @@ export interface SharingApp {
 }
 
 export interface Storage {
+    get(key, param);
+
+    remove(key, param);
+
+    set(key, param1, param2, param3)
+
     accessMode: AccessMode;
 }
 
@@ -461,6 +796,8 @@ export interface URLType {
 }
 
 export interface Colors {
+    get(saturation: number, hex: string): string
+
     getColorFromPalette(name: string): string;
 
     mix(hex1: string, hex2: string, saturation?: number): string
@@ -468,6 +805,8 @@ export interface Colors {
 
 export interface LocalStorage {
     get(key: string): string
+
+    getPrefix(): string;
 
     remove(key: string);
 
@@ -479,8 +818,20 @@ export interface LocalStorage {
 export interface Utils {
     colors: Colors;
     ls: LocalStorage;
-    lang: Event;
-    translate: Event;
+    lang: Lang;
+    translate: Translate;
+    editor: ChaynsEditor
+
+    createTappUrl(param: any): any;
+
+    getJwtPayload(param: any): any;
+
+    getScaledImageUrl(
+        url: string,
+        height?: number,
+        width?: number,
+        preventWebP?: boolean
+    ): string;
 
     isArray(param: any): boolean;
 
@@ -529,4 +880,135 @@ export interface Utils {
     isUndefined(param: any): boolean;
 
     isUrl(param: any): boolean;
+
+    resetEnvironment(param?: any);
+
+    setLevel(param?: any);
+}
+
+export interface Intercom {
+    sendMessageToGroup(groupId: number, config: {
+        text: string
+    }): Promise<Response>;
+    sendMessageToPage(config: {text: string}): Promise<Response>;
+    sendMessageToUser(userId: number, config: {text: string})
+}
+
+export interface SmartShopArticle {
+    id: number;
+    amount: number;
+}
+
+export interface SmartShop {
+    init(config: object): any;
+    offer: {
+        getCategories(): any;
+        getCategory(categoryId: number): any;
+    },
+    cart: {
+        userId: {
+            lastName: string;
+            invoiceRequested: boolean;
+            orderUid: string;
+            voucher: Array<any>;
+            userId: number;
+            topFlag: boolean;
+            branchTipFactor: number;
+            cartPrice: number;
+            voucherList: Array<any>;
+            personId: string;
+            tipSum:number;
+            expires: number;
+            fullname: string;
+            firstname: string;
+            articles: Array<SmartShopArticle>
+        },
+        cartCount: number;
+        exp: number
+        addArticle(article: SmartShopArticle): any;
+        removeArticle(article: SmartShopArticle): any;
+        get(): any;
+        set(...params: any): any;
+        remove(): any;
+        smartCheckout(config: any): any;
+        addServerArticle(...params: any): any;
+        confirm(...params: any): any;
+        create(...params: any): any;
+        removeServerArticle(...params: any): any;
+        removeTip(...params: any): any;
+        setTip(...params: any): any;
+        toOrder(...params: any): any;
+    }
+    tapp: {
+        gotoCart(...params: any): any;
+        gotoShop(...params: any): any;
+        configure(config: {customShopUrl: string}): any;
+        showFloatingButton(value?: any): any;
+    }
+    admin: {
+        branch: {
+            updateText(options: {field: string, value: string}): any;
+        }
+        accounting(...params: any): any;
+        article(...params: any): any;
+        group(...params: any): any;
+        intercom(...params: any): any;
+        option(...params: any): any;
+        output(...params: any): any;
+        processor(...params: any): any;
+        subscription(...params: any): any;
+    }
+    settings: {
+        getProcessor(...params: any): any;
+    }
+    order: {
+        getInternal(...params: any): any;
+        getPopular(...params: any): any;
+        addArticle(...params: any): any;
+        addClientArticle(...params: any): any;
+        cancel(...params: any): any;
+        clearClientCar(...params: any): any;
+        confirm(...params: any): any;
+        create(...params: any): any;
+        createFromClientCart(...params: any): any;
+        extendTtl(...params: any): any;
+        getClientCart(...params: any): any;
+        getClientOrderedArticles(...params: any): any;
+        getHistory(...params: any): any;
+        removeArticle(...params: any): any;
+        setClientCart(...params: any): any;
+    }
+    branch: {
+        addImage(...params: any): any;
+        createBranchConfig(...params: any): any;
+        getBranchConfig(...params: any): any;
+        removeImage(...params: any): any;
+        updateBranch(...params: any): any;
+        updateBranchConfig(...params: any): any;
+        updateBranchText(...params: any): any;
+        updateOpmOwner(...params: any): any;
+    }
+    carousel: {
+        isEnable(...params: any): any;
+    }
+    groups: {
+        get(...params: any): any;
+    }
+    payment: {
+        getOpmStatus(...params: any): any;
+        getTssmPaymentInfo(...params: any): any;
+    }
+    subscription: {
+        getArticle(...params: any): any;
+    }
+    user: {
+        getAccountBalance(...params: any): any;
+        getByNfc(...params: any): any;
+        getByPersonId(...params: any): any;
+        getByQr(...params: any): any;
+        isStaff(...params: any): any;
+    }
+    utils: {
+        convertToClientArticle(...params: any): any;
+    }
 }
