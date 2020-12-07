@@ -296,7 +296,7 @@ export interface Dialog {
     inputType: InputType;
     fileType: FileType;
 
-    alert(headline: string, text: string): Promise<void>;
+    alert(headline: string, text: string): Promise<buttonType>;
 
     confirm(
         headline: string,
@@ -567,8 +567,8 @@ export interface SelectType {
 }
 
 export interface Env {
-    parameters: object;
-    _parameters: object;
+    parameters: { [key: string]: string };
+    _parameters: { [key: string]: string };
     browser: Browser;
     language: string;
     site: Site;
@@ -592,6 +592,7 @@ export interface Env {
     isWidget: boolean;
     isInFrame: boolean;
     isInFacebookFrame: boolean;
+    isChaynsnetRuntime: boolean;
     appVersion: number;
     debugMode: boolean;
     apiVersion: number;
@@ -834,7 +835,7 @@ export interface Colors {
 }
 
 export interface LocalStorage {
-    get(key: string): string
+    get(key: string): any
 
     getPrefix(): string;
 
@@ -842,7 +843,7 @@ export interface LocalStorage {
 
     removeAll();
 
-    set(key: string, value: string);
+    set(key: string, value: any): boolean;
 }
 
 export interface Utils {
