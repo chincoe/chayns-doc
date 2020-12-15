@@ -958,8 +958,13 @@ export interface SmartShop {
     init(config: object): any;
 
     offer: {
-        getCategories(): any;
-        getCategory(categoryId: number): any;
+        getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
+        getCategories(param1?: any, param2?: any, param3?: any): Promise<Array<ShopOfferCategory>>;
+        getCategory(categoryId: number): Promise<ShopOfferCategory>;
+        getInternal(param?: any): any;
+        getPopular(): any;
+        getPopularByUserId(param1?: any, param2?: any): any;
+        getPopularUser(param?: any): any;
     },
     cart: {
         userId: {
@@ -998,22 +1003,42 @@ export interface SmartShop {
     tapp: {
         gotoCart(...params: any): any;
         gotoShop(...params: any): any;
-        configure(config: { customShopUrl: string }): any;
+        configure(config: { customShopUrl: string, useFloatingButton: boolean }): any;
         showFloatingButton(value?: any): any;
     }
     admin: {
-        branch: {
-            updateText(options: { field: string, value: string }): any;
+        branch: ShopAdminBranch
+        accounting: ShopAdminAccounting;
+        article: ShopAdminArticle;
+        articleSchedule: ShopAdminArticleSchedule;
+        branchConfig: ShopAdminBranchConfig;
+        communication: {
+            promote(param1?: any, param2?: any): any;
         }
-        accounting(...params: any): any;
-        article(...params: any): any;
-        group(...params: any): any;
-        intercom(...params: any): any;
-        option(...params: any): any;
-        output(...params: any): any;
-        processor(...params: any): any;
-        subscription(...params: any): any;
+        group: ShopAdminGroup;
+        intercom: {
+            sendMessage(param1?: any, param2?: any): any
+        };
+        option: ShopAdminOption;
+        optionGroup: ShopAdminOptionGroup;
+        order: ShopAdminOrder;
+        output: ShopAdminOutput;
+        payment: ShopAdminPayment;
+        processor: ShopAdminProcessor;
+        processorConfig: ShopAdminProcessorConfig;
+        subscription: ShopAdminSubscription;
     }
+    article: {
+        getByIds(param1?: any, param2?: any): any;
+        requestPrice(param?: any): any;
+    },
+    businessHours: {
+        getById(param1?: any, param2?: any): any;
+        getByIds(param1?: any, param2?: any): any;
+        getCurrent(param1?: any, param2?: any, param3?: any, param4?: any): any;
+        getDefault(param?: any): any;
+        getTimes(param1?: any, param2?: any, param3?: any, param4?: any): any;
+    },
     settings: {
         getProcessor(...params: any): any;
     }
@@ -1037,7 +1062,11 @@ export interface SmartShop {
     branch: {
         addImage(...params: any): any;
         createBranchConfig(...params: any): any;
-        getBranchConfig(...params: any): any;
+        getBranchConfig(param1?: any, param2?: any, param3?: any): Promise<BranchConfig>;
+        getCachedBranchConfig(param1?: any, param2?: any): Promise<BranchConfig>;
+        getLocationPosition(locationId: number): Promise<LocationPosition>;
+        getProcessor(processorId: number): Promise<PaymentProcessor>;
+        getProcessors(): Promise<Array<PaymentProcessor>>;
         removeImage(...params: any): any;
         updateBranch(...params: any): any;
         updateBranchConfig(...params: any): any;
@@ -1045,7 +1074,7 @@ export interface SmartShop {
         updateOpmOwner(...params: any): any;
     }
     carousel: {
-        isEnable(...params: any): any;
+        isEnabled(): any;
     }
     groups: {
         get(...params: any): any;
@@ -1067,4 +1096,273 @@ export interface SmartShop {
     utils: {
         convertToClientArticle(...params: any): any;
     }
+}
+
+export type SiteId = string;
+
+export interface BranchConfig {
+    allowForceBooking: boolean,
+    config: BranchConfigConfig,
+    configured: boolean,
+    creationTime: string,
+    disabled: boolean,
+    flags: number,
+    hasBarforce: boolean,
+    name: SiteId,
+    opmStatus: number,
+    ownerPersonId: string | null,
+    texts: Array<BranchConfigText>
+}
+
+export interface BranchConfigConfig {
+    allowCashPayment: boolean
+    allowCouponPayment: boolean
+    allowCustomerCashPayment: boolean
+    currency: null | string | any
+    disableAddVoucher: boolean
+    disableGoToShop: boolean
+    disableLimitedSepa: boolean
+    enableAdditionalFeatures: boolean
+    enableCarousel: boolean
+    enableFineTrading: boolean
+    enableOpmCharge: boolean
+    enableProvisioningDays: boolean
+    enableProvisioningTime: boolean
+    enablePublicOrders: boolean
+    enableQuickBuy: boolean
+    enableRepeatableAction: boolean
+    enableSubscriptions: boolean
+    enableTip: boolean
+    headline: string
+    introText: string
+    isDemo: boolean
+    nextActivationTime: null | string | any
+    onlySitePayment: boolean
+    openFirstCategory: boolean
+    paymentNfc: any
+    processors: Array<PaymentProcessor>
+    provisioningTimeInterval: number
+    showFavoriteArticles: boolean
+    showLatestArticles: number
+    showNetPrices: boolean
+    showPopularArticles: boolean
+    showPrintInvoiceBtn: boolean
+    tipHeadline: null | string
+    tipText: null | string
+    viewType: number
+}
+
+export interface PaymentProcessor {
+    disabled: boolean,
+    id: number,
+    deliveryInformation: Array<any>,
+    outputType: number,
+    processorId: number,
+    sortOrder: number,
+    taxRate: number,
+    visibility: number,
+    name: string,
+    outputs: Array<ProcessorOutput>,
+    config: Array<ProcessorConfig>
+}
+
+export interface ProcessorConfig {
+    branchProcessorId: number,
+    id: number,
+    key: string,
+    description: string | {
+        id: number,
+        name: string,
+        price: number
+    }
+}
+
+export interface ProcessorOutput {
+    active: boolean,
+    branchProcessorId: number,
+    id: number,
+    name: string,
+    outputId: string,
+    outputTypeId: number
+}
+
+export interface BranchConfigText {
+    branchId: number,
+    key: string,
+    value: string
+}
+
+export interface LocationPosition {
+    position: {
+        latitude?: number,
+        longitude?: number
+    }
+}
+
+export interface ShopAdminAccounting {
+    addMember(param?: any): any;
+    getMembers(): any;
+    getUsers(): any;
+    removeMember(param?: any): any;
+}
+
+export interface ShopAdminArticle {
+    addImage(param?: any): any;
+    clone(param?: any): any;
+    create(param?: any): any;
+    createBatch(param?: any): any;
+    createConfig(param1?: any, param2?: any): any;
+    get(param?: any): any;
+    getConfig(param?: any): any;
+    importArticles(param?: any): any;
+    patchConfig(param1?: any, param2?: any, param3?: any): any;
+    remove(param?: any): any;
+    removeConfig(param?: any): any;
+    removeImage(param?: any): any;
+    setToGroups(param1?: any, param2?: any): any;
+    sort(param1?: any, param2?: any): any;
+    sortImages(param1?: any, param2?: any, param3?: any): any;
+    switchArticle(param1?: any, param2?: any, param3?: any, param4?: any),
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminArticleSchedule {
+    create(param?: any): any;
+    get(param?: any): any;
+}
+
+export interface ShopAdminBranch {
+    addImage(param?: any): any;
+    removeImage(param?: any): any;
+    update(param?: any): any;
+    updateOwner(param?: any): any;
+    updateText(options: { field: string, value: string }): any;
+}
+
+export interface ShopAdminBranchConfig {
+    tip: {
+        put(param?: any): any;
+        remove(param?: any): any;
+        removeAccount(): any;
+    },
+    update(param?: any): any;
+}
+
+export interface ShopAdminGroup {
+    create(param?: any): any;
+    remove(param?: any): any;
+    sort(param?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminOption {
+    create(param?: any): any;
+    remove(param?: any): any;
+    sort(param1?: any, param2?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminOptionGroup {
+    create(param?: any): any;
+    remove(param?: any): any;
+    sort(param1?: any, param2?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminOrder {
+    exportProvisioningOrders(param?: any): any;
+    getProvisioningOrders(): any;
+}
+
+export interface ShopAdminOutput {
+    assign(param?: any): any;
+    create(param?: any): any;
+    get(param?: any): any;
+    remove(param1?: any, param2?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminPayment {
+    getLocationInfo(): any;
+
+    getOpmTypes(): any;
+
+    getPaymentData(param?: any): any;
+
+    getSiteAddress(param1?: any, param2?: any): any
+
+    saveLocationInfo(param?: any): any;
+    savePaymentData(param?: any): any;
+    saveSiteAddress(param?: any): any;
+}
+
+export interface ShopAdminProcessor {
+    create(param?: any): any;
+    deliveryInformation: {
+        create(param1?: any, param2?: any): any;
+        createBatch(param1?: any, param2?: any): any;
+        patchBatch(param1?: any, param2?: any): any;
+        patchFeePrice(param1?: any, param2?: any): any;
+        remove(param1?: any, param2?: any): any;
+    },
+    get(): any;
+    remove(param?: any): any;
+    sort(param?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminProcessorConfig {
+    create(param?: any): any;
+    remove(param?: any): any;
+    update(param1?: any, param2?: any): any;
+}
+
+export interface ShopAdminSubscription {
+    approve(param?: any): any;
+    get(param?: any): any;
+    reject(param?: any): any;
+    remove(param?: any): any;
+}
+
+export interface ShopOfferCategory {
+    description: string | null,
+    disabled: boolean,
+    hidden: boolean,
+    id: number,
+    name: string,
+    outputDevices: Array<any>;
+    sortOrder: number,
+    visibility: number,
+    articles: Array<ShopOfferCategoryArticle>;
+}
+
+export interface ShopOfferCategoryArticle {
+    amount: number,
+    articleNo: any,
+    basePrice: number,
+    branchId: number,
+    config: Array<any>;
+    disabled: boolean;
+    discountable: boolean,
+    fee: number,
+    flags: number,
+    foreignFee: number,
+    groupId: number,
+    id: number,
+    images: Array<any>
+    name: string,
+    optionGroups: Array<any>;
+    outOfStockFlag: boolean,
+    position: any,
+    price: number,
+    provision: number,
+    recurringInterval: number,
+    recurringType: number,
+    retailPrice: number | any,
+    soldAmount: number,
+    sortOrder: number,
+    subCancellationAllowed: boolean,
+    subscription: Array<any>;
+    system: boolean,
+    taxRate: number
 }
