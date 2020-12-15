@@ -566,9 +566,31 @@ export interface SelectType {
     ICON: number;
 }
 
+export interface ChaynsParameters {
+    AdminMode: "0" | "1",
+    color: string,
+    colorMode: "0" | "1" | "2",
+    contentWide: "true" | "false",
+    contentWidth: string,
+    exclusiveView: "true" | "false",
+    font: string,
+    isStaging: "0" | "1",
+    lang: "de" | "en" | string,
+    layoutMode: string,
+    loggedin: "0" | "1",
+    menuHeight: string,
+    offsetTop: string,
+    pageYOffset: string,
+    screenHeight: string,
+    screenWidth: string,
+    siteId: string,
+    supportsWebP: "0" | "1",
+    translang: "de" | "en" | string
+}
+
 export interface Env {
-    parameters: { [key: string]: string };
-    _parameters: { [key: string]: string };
+    parameters: ChaynsParameters | { [key: string]: string };
+    _parameters: ChaynsParameters | { [key: string]: string };
     browser: Browser;
     language: string;
     site: Site;
