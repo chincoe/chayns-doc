@@ -585,7 +585,8 @@ export interface ChaynsParameters {
     screenWidth: string,
     siteId: string,
     supportsWebP: "0" | "1",
-    translang: "de" | "en" | string
+    translang: "de" | "en" | string,
+    [key: string]: string
 }
 
 export interface Env {
@@ -1003,7 +1004,7 @@ export interface SmartShop {
     tapp: {
         gotoCart(...params: any): any;
         gotoShop(...params: any): any;
-        configure(config: { customShopUrl: string, useFloatingButton: boolean }): any;
+        configure(config: { customShopUrl: string, useFloatingButton: boolean, [key: string]: any }): any;
         showFloatingButton(value?: any): any;
     }
     admin: {
