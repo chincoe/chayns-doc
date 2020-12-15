@@ -1201,41 +1201,65 @@ export interface LocationPosition {
 
 export interface ShopAdminAccounting {
     addMember(param?: any): any;
+
     getMembers(): any;
+
     getUsers(): any;
+
     removeMember(param?: any): any;
 }
 
 export interface ShopAdminArticle {
     addImage(param?: any): any;
+
     clone(param?: any): any;
+
     create(param?: any): any;
+
     createBatch(param?: any): any;
+
     createConfig(param1?: any, param2?: any): any;
+
     get(param?: any): any;
+
     getConfig(param?: any): any;
+
     importArticles(param?: any): any;
+
     patchConfig(param1?: any, param2?: any, param3?: any): any;
+
     remove(param?: any): any;
+
     removeConfig(param?: any): any;
+
     removeImage(param?: any): any;
+
     setToGroups(param1?: any, param2?: any): any;
+
     sort(param1?: any, param2?: any): any;
+
     sortImages(param1?: any, param2?: any, param3?: any): any;
+
     switchArticle(param1?: any, param2?: any, param3?: any, param4?: any),
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminArticleSchedule {
     create(param?: any): any;
+
     get(param?: any): any;
 }
 
 export interface ShopAdminBranch {
     addImage(param?: any): any;
+
     removeImage(param?: any): any;
+
     update(param?: any): any;
+
     updateOwner(param?: any): any;
+
     updateText(options: { field: string, value: string }): any;
 }
 
@@ -1245,40 +1269,55 @@ export interface ShopAdminBranchConfig {
         remove(param?: any): any;
         removeAccount(): any;
     },
+
     update(param?: any): any;
 }
 
 export interface ShopAdminGroup {
     create(param?: any): any;
+
     remove(param?: any): any;
+
     sort(param?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminOption {
     create(param?: any): any;
+
     remove(param?: any): any;
+
     sort(param1?: any, param2?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminOptionGroup {
     create(param?: any): any;
+
     remove(param?: any): any;
+
     sort(param1?: any, param2?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminOrder {
     exportProvisioningOrders(param?: any): any;
+
     getProvisioningOrders(): any;
 }
 
 export interface ShopAdminOutput {
     assign(param?: any): any;
+
     create(param?: any): any;
+
     get(param?: any): any;
+
     remove(param1?: any, param2?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
@@ -1292,12 +1331,15 @@ export interface ShopAdminPayment {
     getSiteAddress(param1?: any, param2?: any): any
 
     saveLocationInfo(param?: any): any;
+
     savePaymentData(param?: any): any;
+
     saveSiteAddress(param?: any): any;
 }
 
 export interface ShopAdminProcessor {
     create(param?: any): any;
+
     deliveryInformation: {
         create(param1?: any, param2?: any): any;
         createBatch(param1?: any, param2?: any): any;
@@ -1305,22 +1347,31 @@ export interface ShopAdminProcessor {
         patchFeePrice(param1?: any, param2?: any): any;
         remove(param1?: any, param2?: any): any;
     },
+
     get(): any;
+
     remove(param?: any): any;
+
     sort(param?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminProcessorConfig {
     create(param?: any): any;
+
     remove(param?: any): any;
+
     update(param1?: any, param2?: any): any;
 }
 
 export interface ShopAdminSubscription {
     approve(param?: any): any;
+
     get(param?: any): any;
+
     reject(param?: any): any;
+
     remove(param?: any): any;
 }
 
