@@ -251,10 +251,10 @@ export interface GetUserResult {
 }
 
 export interface GetUserConfig {
-    AccessToken?: string,
-    FBID?: number,
-    UserID?: number,
-    PersonID?: string
+    accessToken?: string,
+    fbId?: number,
+    userID?: number,
+    personID?: string
 }
 
 export interface GeoLocation {

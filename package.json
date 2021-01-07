@@ -10,8 +10,7 @@
   ],
   "scripts": {
     "pub": "npm publish",
-    "prepublishOnly": "copy \"src/\" \"dist/\" /y",
-    "generate:ts": "jsdoc -t node_modules/tsd-jsdoc/dist -r src/index.js"
+    "prepublishOnly": "copy \"src/\" \"dist/\" /y"
   },
   "repository": {
     "type": "git",
