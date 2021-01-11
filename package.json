@@ -10,6 +10,10 @@
   ],
   "scripts": {
     "pub": "npm publish",
+    "pub:patch": "npm version patch -m \":bookmark: Patch v%s\" && npm publish",
+    "pub:minor": "npm version minor -m \":bookmark: Minor release v%s\" && npm publish",
+    "pub:major": "npm version major -m \":bookmark: Major release v%s\" && npm publish",
+    "preversion": "deprecate.bat",
     "prepublishOnly": "copy \"src/\" \"dist/\" /y"
   },
   "repository": {
