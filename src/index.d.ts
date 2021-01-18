@@ -168,7 +168,7 @@ export interface Chayns {
 
     scrollToY(position: number);
 
-    selectTapp(tapp: SelectTappConfig);
+    selectTapp(tapp: SelectTappConfig, parameter?: string);
 
     sendEventToTopFrame(param: any): any;
 
