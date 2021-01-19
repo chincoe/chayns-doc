@@ -135,7 +135,7 @@ export interface Chayns {
 
     hideWaitCursor(): Promise<any>;
 
-    login(parameters?: string): Promise<{ loginState: 0 | 1 | 2 | 3 }>;
+    login(parameters?: Array<string>): Promise<{ loginState: 0 | 1 | 2 | 3 }>;
 
     logout(logoutType?: 0 | 1): Promise<any>;
 
