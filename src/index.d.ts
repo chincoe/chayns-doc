@@ -1004,7 +1004,7 @@ export interface SmartShop {
     tapp: {
         gotoCart(...params: any): any;
         gotoShop(...params: any): any;
-        configure(config: { customShopUrl: string, useFloatingButton: boolean, [key: string]: any }): any;
+        configure(config: { customShopUrl?: string, useFloatingButton?: boolean, [key: string]: any }): any;
         showFloatingButton(value?: any): any;
     }
     admin: {
