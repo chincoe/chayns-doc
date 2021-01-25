@@ -10,10 +10,11 @@
   ],
   "scripts": {
     "pub": "npm publish",
-    "pub:patch": "npm version patch --no-git-tag-version && npm publish && commit.bat \"Patch\"",
-    "pub:minor": "npm version minor --no-git-tag-version && npm publish && commit.bat \"Minor release\"",
-    "pub:major": "npm version major --no-git-tag-version && npm publish && commit.bat \"Major release\"",
-    "preversion": "deprecate.bat",
+    "pub:patch": "npm version patch --no-git-tag-version && npm publish",
+    "pub:minor": "npm version minor --no-git-tag-version && npm publish",
+    "pub:major": "npm version major --no-git-tag-version && npm publish",
+    "preversion": "node deprecate.js",
+    "postpublish": "node commit.js",
     "prepublishOnly": "copy \"src/\" \"dist/\" /y"
   },
   "repository": {
