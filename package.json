@@ -1,6 +1,6 @@
 {
   "name": "chayns-doc",
-  "version": "1.1.13-0",
+  "version": "1.2.0",
   "description": "A documentation for the global chayns object for chayns development",
   "types": "dist/index.d.ts",
   "files": [
