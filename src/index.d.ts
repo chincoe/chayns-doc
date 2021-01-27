@@ -65,7 +65,7 @@ export interface Chayns {
 
     disallowRefreshScroll(): Promise<any>;
 
-    appendUrlParameter(parameters: object, override?: boolean): Promise<any>;
+    appendUrlParameter(parameters: {[key: string]: any}, override?: boolean): Promise<any>;
 
     closeUrl(): Promise<undefined>;
 
@@ -89,8 +89,8 @@ export interface Chayns {
 
     getGlobalData(): Promise<{
         site: Site,
-        app: object,
-        device: object,
+        app: {[key: string]: any},
+        device: {[key: string]: any},
         user: User
     }>
 
@@ -129,7 +129,7 @@ export interface Chayns {
 
     showTitleImage(): Promise<any>;
 
-    invokeCall(config: Object): Promise<any>;
+    invokeCall(config: {[key: string]: any}): Promise<any>;
 
     showWaitCursor(text?: string, textTimeout?: number, action?: string): Promise<any>;
 
@@ -156,7 +156,7 @@ export interface Chayns {
 
     refreshAccessToken(): Promise<any>;
 
-    register(config: object): any;
+    register(config: {[key: string]: any}): any;
 
     removeSubTapp(config: {
         tappID: number,
@@ -330,7 +330,7 @@ export interface Dialog {
         selectAllButton?: string;
     }): Promise<SelectDialogResult>
 
-    date(config: object): Promise<object>;
+    date(config: {[key: string]: any}): Promise<{[key: string]: any}>;
 
     advancedDate(config: {
         title?: string;
@@ -373,7 +373,7 @@ export interface Dialog {
 
     iFrame(config: {
         url: string,
-        input?: object,
+        input?: {[key: string]: any},
         buttons?: DialogButton[],
         seamless?: boolean,
         transparent?: boolean,
@@ -385,11 +385,11 @@ export interface Dialog {
 
     close(buttonType?: number);
 
-    sendData(data: object, isApiEvent?: boolean);
+    sendData(data: {[key: string]: any}, isApiEvent?: boolean);
 
-    addDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+    addDialogDataListener(callback: (object: any) => any, getApiEvents?: boolean);
 
-    removeDialogDataListener(callback: (object) => any, getApiEvents?: boolean);
+    removeDialogDataListener(callback: (object: any) => any, getApiEvents?: boolean);
 
     setResult(result: any, register?: any);
 
@@ -423,7 +423,7 @@ export interface IntervalItem {
 
 export interface SelectDialogItem {
     name: string,
-    value: string | number | object,
+    value: string | number | {[key: string]: any},
     backgroundColor?: string,
     className?: string,
     url?: string,
@@ -956,7 +956,7 @@ export interface SmartShopArticle {
 }
 
 export interface SmartShop {
-    init(config: object): any;
+    init(config: {[key: string]: any}): any;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
