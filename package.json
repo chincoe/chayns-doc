@@ -24,7 +24,10 @@
   "keywords": [
     "chayns"
   ],
-  "author": "Christian Nagel",
+  "author": {
+    "name": "Christian Nagel",
+    "email": "christian.nagel@tobit.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/chincoe/chayns-doc/issues"
