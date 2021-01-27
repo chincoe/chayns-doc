@@ -2,11 +2,9 @@
   "name": "chayns-doc",
   "version": "1.1.12",
   "description": "A documentation for the global chayns object for chayns development",
-  "main": "src/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/index.d.ts",
-    "dist/index.js"
+    "dist/index.d.ts"
   ],
   "scripts": {
     "pub": "npm publish",
@@ -22,7 +20,9 @@
     "url": "git+https://github.com/chincoe/chayns-doc.git"
   },
   "keywords": [
-    "chayns"
+    "chayns",
+    "types",
+    "typescript"
   ],
   "author": {
     "name": "Christian Nagel",
