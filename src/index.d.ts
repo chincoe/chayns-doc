@@ -129,7 +129,7 @@ export interface Chayns {
 
     showTitleImage(): Promise<any>;
 
-    invokeCall(config: {[key: string]: any}): Promise<any>;
+    invokeCall(call: ChaynsCall, realResolve?: boolean): Promise<any>;
 
     showWaitCursor(text?: string, textTimeout?: number, action?: string): Promise<any>;
 
@@ -948,6 +948,15 @@ export interface Intercom {
     sendMessageToPage(config: { text: string }): Promise<Response>;
 
     sendMessageToUser(userId: number, config: { text: string })
+}
+
+export interface ChaynsCall {
+    action: number;
+    value?: {
+        callback?: string,
+        addJSONParam?: string,
+        [key: string]: string
+    }
 }
 
 export interface SmartShopArticle {
