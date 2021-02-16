@@ -878,7 +878,7 @@ export interface Utils {
 
     createTappUrl(param: any): any;
 
-    getJwtPayload(param: any): any;
+    getJwtPayload(value: any): any;
 
     getScaledImageUrl(
         url: string,
@@ -887,53 +887,53 @@ export interface Utils {
         preventWebP?: boolean
     ): string;
 
-    isArray(param: any): boolean;
+    isArray(value: any): boolean;
 
-    isBLEAddress(param: any): boolean;
+    isBLEAddress(value: any): boolean;
 
-    isBlank(param: any): boolean;
+    isBlank(value: any): boolean;
 
-    isBoolean(param: any): boolean;
+    isBoolean(value: any): boolean;
 
-    isDate(param: any): boolean;
+    isDate(value: any): boolean;
 
-    isDeferred(param: any): boolean;
+    isDeferred(value: any): boolean;
 
-    isDefined(param: any): boolean;
+    isDefined(value: any): boolean;
 
-    isDialogPermitted(param: any): boolean;
+    isDialogPermitted(value: any): boolean;
 
-    isFormData(param: any): boolean;
+    isFormData(value: any): boolean;
 
-    isFormElement(param: any): boolean;
+    isFormElement(value: any): boolean;
 
-    isFunction(param: any): boolean;
+    isFunction(value: any): boolean;
 
-    isGUID(param: any): boolean;
+    isGUID(value: any): boolean;
 
-    isHex(param: any): boolean;
+    isHex(value: any): boolean;
 
-    isJwt(param: any): boolean;
+    isJwt(value: any): boolean;
 
-    isMacAddress(param: any): boolean;
+    isMacAddress(value: any): boolean;
 
-    isNumber(param: any): boolean;
+    isNumber(value: any): boolean;
 
-    isObject(param: any): boolean;
+    isObject(value: any): boolean;
 
-    isPermitted(param: any): boolean;
+    isPermitted(value: any): boolean;
 
-    isPresent(param: any): boolean;
+    isPresent(value: any): boolean;
 
-    isPromise(param: any): boolean;
+    isPromise(value: any): boolean;
 
-    isString(param: any): boolean;
+    isString(value: any): boolean;
 
-    isUUID(param: any): boolean;
+    isUUID(value: any): boolean;
 
-    isUndefined(param: any): boolean;
+    isUndefined(value: any): boolean;
 
-    isUrl(param: any): boolean;
+    isUrl(value: any): boolean;
 
     resetEnvironment(param?: any);
 
@@ -969,7 +969,13 @@ export interface SmartShop {
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
-        getCategories(param1?: any, param2?: any, param3?: any): Promise<Array<ShopOfferCategory>>;
+        /**
+         * Get shop categories
+         * @param visibility - 2: all articles
+         * @param param2
+         * @param param3
+         */
+        getCategories(visibility?: number | 2, param2?: boolean, param3?: any): Promise<Array<ShopOfferCategory>>;
         getCategory(categoryId: number): Promise<ShopOfferCategory>;
         getInternal(param?: any): any;
         getPopular(): any;
