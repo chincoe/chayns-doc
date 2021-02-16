@@ -1234,7 +1234,7 @@ export interface ShopAdminArticle {
 
     createBatch(param?: any): any;
 
-    createConfig(param1?: any, param2?: any): any;
+    createConfig(articleId: number, config: { key: string, value: string }): Promise<string | 'Created article config'>;
 
     get(param?: any): any;
 
