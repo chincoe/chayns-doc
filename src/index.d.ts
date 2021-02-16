@@ -65,7 +65,7 @@ export interface Chayns {
 
     disallowRefreshScroll(): Promise<any>;
 
-    appendUrlParameter(parameters: {[key: string]: any}, override?: boolean): Promise<any>;
+    appendUrlParameter(parameters: { [key: string]: any }, override?: boolean): Promise<any>;
 
     closeUrl(): Promise<undefined>;
 
@@ -89,8 +89,8 @@ export interface Chayns {
 
     getGlobalData(): Promise<{
         site: Site,
-        app: {[key: string]: any},
-        device: {[key: string]: any},
+        app: { [key: string]: any },
+        device: { [key: string]: any },
         user: User
     }>
 
@@ -156,7 +156,7 @@ export interface Chayns {
 
     refreshAccessToken(): Promise<any>;
 
-    register(config: {[key: string]: any}): any;
+    register(config: { [key: string]: any }): any;
 
     removeSubTapp(config: {
         tappID: number,
@@ -330,7 +330,7 @@ export interface Dialog {
         selectAllButton?: string;
     }): Promise<SelectDialogResult>
 
-    date(config: {[key: string]: any}): Promise<{[key: string]: any}>;
+    date(config: { [key: string]: any }): Promise<{ [key: string]: any }>;
 
     advancedDate(config: {
         title?: string;
@@ -373,7 +373,7 @@ export interface Dialog {
 
     iFrame(config: {
         url: string,
-        input?: {[key: string]: any},
+        input?: { [key: string]: any },
         buttons?: DialogButton[],
         seamless?: boolean,
         transparent?: boolean,
@@ -385,7 +385,7 @@ export interface Dialog {
 
     close(buttonType?: number);
 
-    sendData(data: {[key: string]: any}, isApiEvent?: boolean);
+    sendData(data: { [key: string]: any }, isApiEvent?: boolean);
 
     addDialogDataListener(callback: (object: any) => any, getApiEvents?: boolean);
 
@@ -423,7 +423,7 @@ export interface IntervalItem {
 
 export interface SelectDialogItem {
     name: string,
-    value: string | number | {[key: string]: any},
+    value: string | number | { [key: string]: any },
     backgroundColor?: string,
     className?: string,
     url?: string,
@@ -586,6 +586,7 @@ export interface ChaynsParameters {
     siteId: string,
     supportsWebP: "0" | "1",
     translang: "de" | "en" | string,
+
     [key: string]: string
 }
 
@@ -962,10 +963,11 @@ export interface ChaynsCall {
 export interface SmartShopArticle {
     id: number;
     amount: number;
+    meta?: string
 }
 
 export interface SmartShop {
-    init(config: {[key: string]: any}): any;
+    init(config: { [key: string]: any }): any;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
@@ -1100,7 +1102,9 @@ export interface SmartShop {
         getTssmPaymentInfo(...params: any): any;
     }
     subscription: {
-        getArticle(...params: any): any;
+        getArticle(): Promise<Array<ShopArticle> | null>;
+        getByLocationUser(param: any): any;
+        patch(subscriptionId: number, field: string | 'subscriptionEnd', value: string): Promise<any>
     }
     user: {
         getAccountBalance(...params: any): any;
@@ -1230,7 +1234,7 @@ export interface ShopAdminArticle {
 
     clone(param?: any): any;
 
-    create(param?: any): any;
+    create(article: ShopAdminArticleCreate): Promise<any>;
 
     createBatch(param?: any): any;
 
@@ -1258,7 +1262,7 @@ export interface ShopAdminArticle {
 
     switchArticle(param1?: any, param2?: any, param3?: any, param4?: any),
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopArticle>(articleId: number, config: { field: T, value: ShopArticle[T] }): any;
 }
 
 export interface ShopAdminArticleSchedule {
@@ -1276,7 +1280,7 @@ export interface ShopAdminBranch {
 
     updateOwner(param?: any): any;
 
-    updateText(options: { field: string, value: string }): any;
+    updateText(options: { field: string | 'cart_waitcursor_text', value: string }): any;
 }
 
 export interface ShopAdminBranchConfig {
@@ -1286,7 +1290,7 @@ export interface ShopAdminBranchConfig {
         removeAccount(): any;
     },
 
-    update(param?: any): any;
+    update(arg: { field: string | 'showPrintInvoiceBtn' | 'disableAddVoucher' | 'enableSubscriptions', value: boolean }): Promise<any>;
 }
 
 export interface ShopAdminGroup {
@@ -1374,15 +1378,15 @@ export interface ShopAdminProcessor {
 }
 
 export interface ShopAdminProcessorConfig {
-    create(param?: any): any;
+    create(config: { key: string | 'CustomConfirmMessage', value: string, branchProcessorId: number }): Promise<any>;
 
-    remove(param?: any): any;
+    remove(processorId: number): Promise<any>;
 
-    update(param1?: any, param2?: any): any;
+    update(processorId: number, config: { field: string | 'CustomConfirmMessage', value: string }): Promise<any>;
 }
 
 export interface ShopAdminSubscription {
-    approve(param?: any): any;
+    approve(subscriptionId: number): Promise<any>;
 
     get(param?: any): any;
 
@@ -1400,12 +1404,62 @@ export interface ShopOfferCategory {
     outputDevices: Array<any>;
     sortOrder: number,
     visibility: number,
-    articles: Array<ShopOfferCategoryArticle>;
+    articles: Array<ShopArticle>;
 }
 
-export interface ShopOfferCategoryArticle {
+export interface ShopAdminArticleCreate {
+    fee: number | 0,
+    flags: number | 1,
+    foreignFee: number | 3,
+    groupId: number,
+    id: number | -1;
+    images: string[];
+    latency: null | any;
+    name: string;
+    optionGroups: Array<any>;
+    outOfStockFlag: boolean;
+    outputDevice: Array<any>;
+    price: number,
+    provision: number;
+    retailPrice: null | number;
+    soldAmount: number | 0;
+    summary: string;
+    taxRate: number | 7 | 19;
+}
+
+export interface AdminSubscription {
+    articleId: number;
+    creationTime: string;
+    maxSubscriptionPeriod: number;
+    minimumSubscriptionPeriod: number | null;
+    name: string;
+    price: number;
+    recurringInterval: number | 30 | 60 | 90 | 365;
+    subCancellationAllowed: boolean;
+    subscriptionEnd: string | null;
+    subscriptionPeriod: number;
+    users: Array<{
+        city: string;
+        mail: string;
+        minimumSubscription: null | any;
+        name: string;
+        nextPayment: null | any;
+        optionNames: null | any;
+        payment: number;
+        paymentSum: number;
+        personId: string;
+        phone: string;
+        street: string;
+        subId: number;
+        subscriptionEnd: null | string;
+        subscriptionStart: string;
+        zip: string;
+    }>;
+}
+
+export interface ShopArticle {
     amount: number,
-    articleNo: any,
+    articleNo: any | null,
     basePrice: number,
     branchId: number,
     config: Array<any>;
@@ -1423,13 +1477,14 @@ export interface ShopOfferCategoryArticle {
     position: any,
     price: number,
     provision: number,
-    recurringInterval: number,
+    recurringInterval: number | 30 | 90 | 365,
     recurringType: number,
-    retailPrice: number | any,
+    retailPrice: number | null,
     soldAmount: number,
     sortOrder: number,
     subCancellationAllowed: boolean,
     subscription: Array<any>;
+    subscriptionPeriod: number;
     system: boolean,
-    taxRate: number
+    taxRate: number | null
 }
