@@ -967,7 +967,7 @@ export interface SmartShopArticle {
 }
 
 export interface SmartShop {
-    init(config: { [key: string]: any }): any;
+    init(config: ShopInitConfig): Promise<any>;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
@@ -1004,12 +1004,17 @@ export interface SmartShop {
         },
         cartCount: number;
         exp: number
-        addArticle(article: SmartShopArticle): any;
-        removeArticle(article: SmartShopArticle): any;
+        addArticle(article: SmartShopArticle): Promise<any>;
+        removeArticle(article: Partial<SmartShopArticle>): Promise<any>;
         get(): any;
         set(...params: any): any;
-        remove(): any;
-        smartCheckout(config: any): any;
+        remove(): Promise<any>;
+        smartCheckout(config: Record<string, any> & Partial<{
+            processorId: number,
+            waitCursorText: string,
+            showConfirmDialogs: boolean,
+            enableDialogs: boolean
+        }>): Promise<any>;
         addServerArticle(...params: any): any;
         confirm(...params: any): any;
         create(...params: any): any;
@@ -1019,7 +1024,7 @@ export interface SmartShop {
         toOrder(...params: any): any;
     }
     tapp: {
-        gotoCart(...params: any): any;
+        gotoCart(...params: any): Promise<any>;
         gotoShop(...params: any): any;
         configure(config: { customShopUrl?: string, useFloatingButton?: boolean, [key: string]: any }): any;
         showFloatingButton(value?: any): any;
@@ -1115,6 +1120,9 @@ export interface SmartShop {
     }
     utils: {
         convertToClientArticle(...params: any): any;
+    }
+    env: {
+        branchId: number
     }
 }
 
@@ -1230,7 +1238,7 @@ export interface ShopAdminAccounting {
 }
 
 export interface ShopAdminArticle {
-    addImage(param?: any): any;
+    addImage(options: { articleId: number, url: string }): Promise<any>;
 
     clone(param?: any): any;
 
@@ -1248,11 +1256,11 @@ export interface ShopAdminArticle {
 
     patchConfig(param1?: any, param2?: any, param3?: any): any;
 
-    remove(param?: any): any;
+    remove(articleId: number): Promise<any>;
 
     removeConfig(param?: any): any;
 
-    removeImage(param?: any): any;
+    removeImage(imageId: number): Promise<any>;
 
     setToGroups(param1?: any, param2?: any): any;
 
@@ -1262,7 +1270,7 @@ export interface ShopAdminArticle {
 
     switchArticle(param1?: any, param2?: any, param3?: any, param4?: any),
 
-    update<T extends keyof ShopArticle>(articleId: number, config: { field: T, value: ShopArticle[T] }): any;
+    update<T extends keyof ShopArticle>(articleId: number, config: { field: T, value: ShopArticle[T] }): Promise<any>;
 }
 
 export interface ShopAdminArticleSchedule {
@@ -1276,11 +1284,11 @@ export interface ShopAdminBranch {
 
     removeImage(param?: any): any;
 
-    update(param?: any): any;
+    update<T extends keyof BranchConfigConfig>(option: { field: T, value: BranchConfigConfig[T] }): Promise<any>;
 
     updateOwner(param?: any): any;
 
-    updateText(options: { field: string | 'cart_waitcursor_text', value: string }): any;
+    updateText(options: { field: CartText, value: string }): Promise<any>;
 }
 
 export interface ShopAdminBranchConfig {
@@ -1290,37 +1298,43 @@ export interface ShopAdminBranchConfig {
         removeAccount(): any;
     },
 
-    update(arg: { field: string | 'showPrintInvoiceBtn' | 'disableAddVoucher' | 'enableSubscriptions', value: boolean }): Promise<any>;
+    update<T extends keyof BranchConfigConfig>(arg: { field: T, value: BranchConfigConfig[T] }): Promise<any>;
 }
 
 export interface ShopAdminGroup {
-    create(param?: any): any;
+    create(options: Partial<ShopOfferCategory>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(param?: any): Promise<any>;
 
     sort(param?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopOfferCategory>(
+        groupId: number,
+        options: { field: T, value: ShopOfferCategory[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminOption {
-    create(param?: any): any;
+    create(group: Partial<ShopArticle>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(optionId: number): Promise<any>;
 
     sort(param1?: any, param2?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopArticle>(optionId: number, config: { field: T, value: ShopArticle[T] }): Promise<any>;
 }
 
 export interface ShopAdminOptionGroup {
-    create(param?: any): any;
+    create(group: Partial<OptionGroup>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(optionGroupId: number): Promise<any>;
 
     sort(param1?: any, param2?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof OptionGroup>(
+        optionGroupId: number,
+        config: { field: T, value: OptionGroup[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminOrder {
@@ -1332,13 +1346,16 @@ export interface ShopAdminOrder {
 export interface ShopAdminOutput {
     assign(param?: any): any;
 
-    create(param?: any): any;
+    create(output: Partial<ProcessorOutput>): Promise<any>;
 
     get(param?: any): any;
 
-    remove(param1?: any, param2?: any): any;
+    remove(processorId: number, outputIds: Array<string>): Promise<any>;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ProcessorOutput>(
+        outputId: number,
+        option: { field: T, value: ProcessorOutput[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminPayment {
@@ -1370,19 +1387,29 @@ export interface ShopAdminProcessor {
 
     get(): any;
 
-    remove(param?: any): any;
+    remove(processorId: number): Promise<any>;
 
     sort(param?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof PaymentProcessor>(
+        processorId: number,
+        option: { field: T, value: PaymentProcessor[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminProcessorConfig {
-    create(config: { key: string | 'CustomConfirmMessage', value: string, branchProcessorId: number }): Promise<any>;
+    create(config: {
+        key: string | 'CustomConfirmMessage' | 'CustomConfirmAction',
+        value: string | boolean | number,
+        branchProcessorId: number
+    }): Promise<any>;
 
-    remove(processorId: number): Promise<any>;
+    remove(processorConfigId: number): Promise<any>;
 
-    update(processorId: number, config: { field: string | 'CustomConfirmMessage', value: string }): Promise<any>;
+    update(
+        processorConfigId: number,
+        config: { field: string | 'CustomConfirmMessage' | 'CustomConfirmAction', value: string | boolean | number }
+    ): Promise<any>;
 }
 
 export interface ShopAdminSubscription {
@@ -1407,25 +1434,7 @@ export interface ShopOfferCategory {
     articles: Array<ShopArticle>;
 }
 
-export interface ShopAdminArticleCreate {
-    fee: number | 0,
-    flags: number | 1,
-    foreignFee: number | 3,
-    groupId: number,
-    id: number | -1;
-    images: string[];
-    latency: null | any;
-    name: string;
-    optionGroups: Array<any>;
-    outOfStockFlag: boolean;
-    outputDevice: Array<any>;
-    price: number,
-    provision: number;
-    retailPrice: null | number;
-    soldAmount: number | 0;
-    summary: string;
-    taxRate: number | 7 | 19;
-}
+export type ShopAdminArticleCreate = Partial<ShopArticle> & Record<string, string>
 
 export interface AdminSubscription {
     articleId: number;
@@ -1472,12 +1481,12 @@ export interface ShopArticle {
     id: number,
     images: Array<any>
     name: string,
-    optionGroups: Array<any>;
+    optionGroups: Array<OptionGroup>;
     outOfStockFlag: boolean,
     position: any,
     price: number,
     provision: number,
-    recurringInterval: number | 30 | 90 | 365,
+    recurringInterval: number | 30 | 60 | 90 | 365,
     recurringType: number,
     retailPrice: number | null,
     soldAmount: number,
@@ -1486,5 +1495,50 @@ export interface ShopArticle {
     subscription: Array<any>;
     subscriptionPeriod: number;
     system: boolean,
-    taxRate: number | null
+    taxRate: number | null | 7 | 19
 }
+
+export interface ShopInitConfig {
+    introText: string;
+    headline: string;
+    createShop?: boolean;
+    tapp?: {
+        useFloatingButton?: boolean,
+        useSubTapp?: boolean
+    };
+
+    [key: string]: any;
+}
+
+export interface OptionGroup {
+    articleId: number,
+    hidden: boolean,
+    id: number,
+    multiSelect: boolean;
+    name: string;
+    required: boolean;
+    sortOrder: number;
+    text: string;
+    options: Array<Option>
+}
+
+export interface Option {
+    branchId: number;
+    foreignFee: number;
+    groupId: number;
+    id: number;
+    name: string;
+    price: number;
+    provision: number;
+    selected: boolean;
+    taxRate: number | 7 | 19;
+}
+
+export type CartText =
+    'cart_headline'
+    | 'cart_intro_text'
+    | 'cart_bnt_go_to_shop'
+    | 'cart_bnt_confirm'
+    | 'cart_processor_headline'
+    | 'cart_waitcursor_text'
+    | string
