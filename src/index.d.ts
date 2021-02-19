@@ -65,7 +65,7 @@ export interface Chayns {
 
     disallowRefreshScroll(): Promise<any>;
 
-    appendUrlParameter(parameters: {[key: string]: any}, override?: boolean): Promise<any>;
+    appendUrlParameter(parameters: { [key: string]: any }, override?: boolean): Promise<any>;
 
     closeUrl(): Promise<undefined>;
 
@@ -89,8 +89,8 @@ export interface Chayns {
 
     getGlobalData(): Promise<{
         site: Site,
-        app: {[key: string]: any},
-        device: {[key: string]: any},
+        app: { [key: string]: any },
+        device: { [key: string]: any },
         user: User
     }>
 
@@ -156,7 +156,7 @@ export interface Chayns {
 
     refreshAccessToken(): Promise<any>;
 
-    register(config: {[key: string]: any}): any;
+    register(config: { [key: string]: any }): any;
 
     removeSubTapp(config: {
         tappID: number,
@@ -330,7 +330,7 @@ export interface Dialog {
         selectAllButton?: string;
     }): Promise<SelectDialogResult>
 
-    date(config: {[key: string]: any}): Promise<{[key: string]: any}>;
+    date(config: { [key: string]: any }): Promise<{ [key: string]: any }>;
 
     advancedDate(config: {
         title?: string;
@@ -373,7 +373,7 @@ export interface Dialog {
 
     iFrame(config: {
         url: string,
-        input?: {[key: string]: any},
+        input?: { [key: string]: any },
         buttons?: DialogButton[],
         seamless?: boolean,
         transparent?: boolean,
@@ -385,7 +385,7 @@ export interface Dialog {
 
     close(buttonType?: number);
 
-    sendData(data: {[key: string]: any}, isApiEvent?: boolean);
+    sendData(data: { [key: string]: any }, isApiEvent?: boolean);
 
     addDialogDataListener(callback: (object: any) => any, getApiEvents?: boolean);
 
@@ -423,7 +423,7 @@ export interface IntervalItem {
 
 export interface SelectDialogItem {
     name: string,
-    value: string | number | {[key: string]: any},
+    value: string | number | { [key: string]: any },
     backgroundColor?: string,
     className?: string,
     url?: string,
@@ -586,6 +586,7 @@ export interface ChaynsParameters {
     siteId: string,
     supportsWebP: "0" | "1",
     translang: "de" | "en" | string,
+
     [key: string]: string
 }
 
@@ -878,7 +879,7 @@ export interface Utils {
 
     createTappUrl(param: any): any;
 
-    getJwtPayload(param: any): any;
+    getJwtPayload(value: any): any;
 
     getScaledImageUrl(
         url: string,
@@ -887,53 +888,53 @@ export interface Utils {
         preventWebP?: boolean
     ): string;
 
-    isArray(param: any): boolean;
+    isArray(value: any): boolean;
 
-    isBLEAddress(param: any): boolean;
+    isBLEAddress(value: any): boolean;
 
-    isBlank(param: any): boolean;
+    isBlank(value: any): boolean;
 
-    isBoolean(param: any): boolean;
+    isBoolean(value: any): boolean;
 
-    isDate(param: any): boolean;
+    isDate(value: any): boolean;
 
-    isDeferred(param: any): boolean;
+    isDeferred(value: any): boolean;
 
-    isDefined(param: any): boolean;
+    isDefined(value: any): boolean;
 
-    isDialogPermitted(param: any): boolean;
+    isDialogPermitted(value: any): boolean;
 
-    isFormData(param: any): boolean;
+    isFormData(value: any): boolean;
 
-    isFormElement(param: any): boolean;
+    isFormElement(value: any): boolean;
 
-    isFunction(param: any): boolean;
+    isFunction(value: any): boolean;
 
-    isGUID(param: any): boolean;
+    isGUID(value: any): boolean;
 
-    isHex(param: any): boolean;
+    isHex(value: any): boolean;
 
-    isJwt(param: any): boolean;
+    isJwt(value: any): boolean;
 
-    isMacAddress(param: any): boolean;
+    isMacAddress(value: any): boolean;
 
-    isNumber(param: any): boolean;
+    isNumber(value: any): boolean;
 
-    isObject(param: any): boolean;
+    isObject(value: any): boolean;
 
-    isPermitted(param: any): boolean;
+    isPermitted(value: any): boolean;
 
-    isPresent(param: any): boolean;
+    isPresent(value: any): boolean;
 
-    isPromise(param: any): boolean;
+    isPromise(value: any): boolean;
 
-    isString(param: any): boolean;
+    isString(value: any): boolean;
 
-    isUUID(param: any): boolean;
+    isUUID(value: any): boolean;
 
-    isUndefined(param: any): boolean;
+    isUndefined(value: any): boolean;
 
-    isUrl(param: any): boolean;
+    isUrl(value: any): boolean;
 
     resetEnvironment(param?: any);
 
@@ -962,14 +963,21 @@ export interface ChaynsCall {
 export interface SmartShopArticle {
     id: number;
     amount: number;
+    meta?: string
 }
 
 export interface SmartShop {
-    init(config: {[key: string]: any}): any;
+    init(config: ShopInitConfig): Promise<any>;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
-        getCategories(param1?: any, param2?: any, param3?: any): Promise<Array<ShopOfferCategory>>;
+        /**
+         * Get shop categories
+         * @param visibility - 2: all articles
+         * @param param2
+         * @param param3
+         */
+        getCategories(visibility?: number | 2, param2?: boolean, param3?: any): Promise<Array<ShopOfferCategory>>;
         getCategory(categoryId: number): Promise<ShopOfferCategory>;
         getInternal(param?: any): any;
         getPopular(): any;
@@ -996,12 +1004,17 @@ export interface SmartShop {
         },
         cartCount: number;
         exp: number
-        addArticle(article: SmartShopArticle): any;
-        removeArticle(article: SmartShopArticle): any;
+        addArticle(article: SmartShopArticle): Promise<any>;
+        removeArticle(article: Partial<SmartShopArticle>): Promise<any>;
         get(): any;
         set(...params: any): any;
-        remove(): any;
-        smartCheckout(config: any): any;
+        remove(): Promise<any>;
+        smartCheckout(config: Record<string, any> & Partial<{
+            processorId: number,
+            waitCursorText: string,
+            showConfirmDialogs: boolean,
+            enableDialogs: boolean
+        }>): Promise<any>;
         addServerArticle(...params: any): any;
         confirm(...params: any): any;
         create(...params: any): any;
@@ -1011,7 +1024,7 @@ export interface SmartShop {
         toOrder(...params: any): any;
     }
     tapp: {
-        gotoCart(...params: any): any;
+        gotoCart(...params: any): Promise<any>;
         gotoShop(...params: any): any;
         configure(config: { customShopUrl?: string, useFloatingButton?: boolean, [key: string]: any }): any;
         showFloatingButton(value?: any): any;
@@ -1094,7 +1107,9 @@ export interface SmartShop {
         getTssmPaymentInfo(...params: any): any;
     }
     subscription: {
-        getArticle(...params: any): any;
+        getArticle(): Promise<Array<ShopArticle> | null>;
+        getByLocationUser(param: any): any;
+        patch(subscriptionId: number, field: string | 'subscriptionEnd', value: string): Promise<any>
     }
     user: {
         getAccountBalance(...params: any): any;
@@ -1105,6 +1120,9 @@ export interface SmartShop {
     }
     utils: {
         convertToClientArticle(...params: any): any;
+    }
+    env: {
+        branchId: number
     }
 }
 
@@ -1220,15 +1238,15 @@ export interface ShopAdminAccounting {
 }
 
 export interface ShopAdminArticle {
-    addImage(param?: any): any;
+    addImage(options: { articleId: number, url: string }): Promise<any>;
 
     clone(param?: any): any;
 
-    create(param?: any): any;
+    create(article: ShopAdminArticleCreate): Promise<any>;
 
     createBatch(param?: any): any;
 
-    createConfig(param1?: any, param2?: any): any;
+    createConfig(articleId: number, config: { key: string, value: string }): Promise<string | 'Created article config'>;
 
     get(param?: any): any;
 
@@ -1238,11 +1256,11 @@ export interface ShopAdminArticle {
 
     patchConfig(param1?: any, param2?: any, param3?: any): any;
 
-    remove(param?: any): any;
+    remove(articleId: number): Promise<any>;
 
     removeConfig(param?: any): any;
 
-    removeImage(param?: any): any;
+    removeImage(imageId: number): Promise<any>;
 
     setToGroups(param1?: any, param2?: any): any;
 
@@ -1252,7 +1270,7 @@ export interface ShopAdminArticle {
 
     switchArticle(param1?: any, param2?: any, param3?: any, param4?: any),
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopArticle>(articleId: number, config: { field: T, value: ShopArticle[T] }): Promise<any>;
 }
 
 export interface ShopAdminArticleSchedule {
@@ -1266,11 +1284,11 @@ export interface ShopAdminBranch {
 
     removeImage(param?: any): any;
 
-    update(param?: any): any;
+    update<T extends keyof BranchConfigConfig>(option: { field: T, value: BranchConfigConfig[T] }): Promise<any>;
 
     updateOwner(param?: any): any;
 
-    updateText(options: { field: string, value: string }): any;
+    updateText(options: { field: CartText, value: string }): Promise<any>;
 }
 
 export interface ShopAdminBranchConfig {
@@ -1280,37 +1298,43 @@ export interface ShopAdminBranchConfig {
         removeAccount(): any;
     },
 
-    update(param?: any): any;
+    update<T extends keyof BranchConfigConfig>(arg: { field: T, value: BranchConfigConfig[T] }): Promise<any>;
 }
 
 export interface ShopAdminGroup {
-    create(param?: any): any;
+    create(options: Partial<ShopOfferCategory>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(param?: any): Promise<any>;
 
     sort(param?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopOfferCategory>(
+        groupId: number,
+        options: { field: T, value: ShopOfferCategory[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminOption {
-    create(param?: any): any;
+    create(group: Partial<ShopArticle>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(optionId: number): Promise<any>;
 
     sort(param1?: any, param2?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ShopArticle>(optionId: number, config: { field: T, value: ShopArticle[T] }): Promise<any>;
 }
 
 export interface ShopAdminOptionGroup {
-    create(param?: any): any;
+    create(group: Partial<OptionGroup>): Promise<any>;
 
-    remove(param?: any): any;
+    remove(optionGroupId: number): Promise<any>;
 
     sort(param1?: any, param2?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof OptionGroup>(
+        optionGroupId: number,
+        config: { field: T, value: OptionGroup[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminOrder {
@@ -1322,13 +1346,16 @@ export interface ShopAdminOrder {
 export interface ShopAdminOutput {
     assign(param?: any): any;
 
-    create(param?: any): any;
+    create(output: Partial<ProcessorOutput>): Promise<any>;
 
     get(param?: any): any;
 
-    remove(param1?: any, param2?: any): any;
+    remove(processorId: number, outputIds: Array<string>): Promise<any>;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof ProcessorOutput>(
+        outputId: number,
+        option: { field: T, value: ProcessorOutput[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminPayment {
@@ -1360,23 +1387,33 @@ export interface ShopAdminProcessor {
 
     get(): any;
 
-    remove(param?: any): any;
+    remove(processorId: number): Promise<any>;
 
     sort(param?: any): any;
 
-    update(param1?: any, param2?: any): any;
+    update<T extends keyof PaymentProcessor>(
+        processorId: number,
+        option: { field: T, value: PaymentProcessor[T] }
+    ): Promise<any>;
 }
 
 export interface ShopAdminProcessorConfig {
-    create(param?: any): any;
+    create(config: {
+        key: string | 'CustomConfirmMessage' | 'CustomConfirmAction',
+        value: string | boolean | number,
+        branchProcessorId: number
+    }): Promise<any>;
 
-    remove(param?: any): any;
+    remove(processorConfigId: number): Promise<any>;
 
-    update(param1?: any, param2?: any): any;
+    update(
+        processorConfigId: number,
+        config: { field: string | 'CustomConfirmMessage' | 'CustomConfirmAction', value: string | boolean | number }
+    ): Promise<any>;
 }
 
 export interface ShopAdminSubscription {
-    approve(param?: any): any;
+    approve(subscriptionId: number): Promise<any>;
 
     get(param?: any): any;
 
@@ -1394,12 +1431,44 @@ export interface ShopOfferCategory {
     outputDevices: Array<any>;
     sortOrder: number,
     visibility: number,
-    articles: Array<ShopOfferCategoryArticle>;
+    articles: Array<ShopArticle>;
 }
 
-export interface ShopOfferCategoryArticle {
+export type ShopAdminArticleCreate = Partial<ShopArticle> & Record<string, string>
+
+export interface AdminSubscription {
+    articleId: number;
+    creationTime: string;
+    maxSubscriptionPeriod: number;
+    minimumSubscriptionPeriod: number | null;
+    name: string;
+    price: number;
+    recurringInterval: number | 30 | 60 | 90 | 365;
+    subCancellationAllowed: boolean;
+    subscriptionEnd: string | null;
+    subscriptionPeriod: number;
+    users: Array<{
+        city: string;
+        mail: string;
+        minimumSubscription: null | any;
+        name: string;
+        nextPayment: null | any;
+        optionNames: null | any;
+        payment: number;
+        paymentSum: number;
+        personId: string;
+        phone: string;
+        street: string;
+        subId: number;
+        subscriptionEnd: null | string;
+        subscriptionStart: string;
+        zip: string;
+    }>;
+}
+
+export interface ShopArticle {
     amount: number,
-    articleNo: any,
+    articleNo: any | null,
     basePrice: number,
     branchId: number,
     config: Array<any>;
@@ -1412,18 +1481,64 @@ export interface ShopOfferCategoryArticle {
     id: number,
     images: Array<any>
     name: string,
-    optionGroups: Array<any>;
+    optionGroups: Array<OptionGroup>;
     outOfStockFlag: boolean,
     position: any,
     price: number,
     provision: number,
-    recurringInterval: number,
+    recurringInterval: number | 30 | 60 | 90 | 365,
     recurringType: number,
-    retailPrice: number | any,
+    retailPrice: number | null,
     soldAmount: number,
     sortOrder: number,
     subCancellationAllowed: boolean,
     subscription: Array<any>;
+    subscriptionPeriod: number;
     system: boolean,
-    taxRate: number
+    taxRate: number | null | 7 | 19
 }
+
+export interface ShopInitConfig {
+    introText: string;
+    headline: string;
+    createShop?: boolean;
+    tapp?: {
+        useFloatingButton?: boolean,
+        useSubTapp?: boolean
+    };
+
+    [key: string]: any;
+}
+
+export interface OptionGroup {
+    articleId: number,
+    hidden: boolean,
+    id: number,
+    multiSelect: boolean;
+    name: string;
+    required: boolean;
+    sortOrder: number;
+    text: string;
+    options: Array<Option>
+}
+
+export interface Option {
+    branchId: number;
+    foreignFee: number;
+    groupId: number;
+    id: number;
+    name: string;
+    price: number;
+    provision: number;
+    selected: boolean;
+    taxRate: number | 7 | 19;
+}
+
+export type CartText =
+    'cart_headline'
+    | 'cart_intro_text'
+    | 'cart_bnt_go_to_shop'
+    | 'cart_bnt_confirm'
+    | 'cart_processor_headline'
+    | 'cart_waitcursor_text'
+    | string
