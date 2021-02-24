@@ -967,7 +967,7 @@ export interface SmartShopArticle {
 }
 
 export interface SmartShop {
-    init(config: ShopInitConfig): Promise<any>;
+    init(config: Partial<ShopInitConfig>): Promise<any>;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
