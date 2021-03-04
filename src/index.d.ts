@@ -223,7 +223,7 @@ export interface SetHeightConfig {
 }
 
 export interface SelectTappConfig {
-    tappId?: number,
+    id?: number,
     showName?: string,
     internalName?: string,
     siteId?: string,
