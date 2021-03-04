@@ -12,7 +12,8 @@
     "pub:minor": "npm version minor --no-git-tag-version && npm publish",
     "pub:major": "npm version major --no-git-tag-version && npm publish",
     "preversion": "node deprecate.js",
-    "postpublish": "node commit.js"
+    "postpublish": "node commit.js",
+    "prepublishOnly": "copy \"src/\" \"dist/\" /y"
   },
   "repository": {
     "type": "git",
