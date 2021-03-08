@@ -219,7 +219,7 @@ export interface SetHeightConfig {
     growOnly?: boolean,
     full?: boolean,
     fullViewport?: boolean,
-    forceHeight?: boolean
+    force?: boolean
 }
 
 export interface SelectTappConfig {
