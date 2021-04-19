@@ -1,7 +1,7 @@
 {
   "name": "chayns-doc",
   "version": "1.3.3",
-  "description": "A documentation for the global chayns object for chayns development",
+  "description": "A typescript type definition for the chayns v4 client api",
   "types": "dist/index.d.ts",
   "files": [
     "dist/index.d.ts"
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chincoe/chayns-doc.git"
+    "url": "git+https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc.git"
   },
   "keywords": [
     "chayns",
@@ -29,9 +29,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chincoe/chayns-doc/issues"
+    "url": "https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc/issues"
   },
-  "homepage": "https://github.com/chincoe/chayns-doc#readme",
+  "homepage": "https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc#readme",
   "devDependencies": {
     "eslint": "^7.14.0",
     "eslint-plugin-jsdoc": "^30.7.8",
