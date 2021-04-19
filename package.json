@@ -1,6 +1,6 @@
 {
   "name": "chayns-doc",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "A typescript type definition for the chayns v4 client api",
   "types": "dist/index.d.ts",
   "files": [
@@ -13,7 +13,7 @@
     "pub:major": "npm version major --no-git-tag-version && npm publish",
     "preversion": "node deprecate.js",
     "postpublish": "node commit.js",
-    "prepublishOnly": "copy \"src/\" \"dist/\" /y"
+    "prepublishOnly": "copy src dist /y"
   },
   "repository": {
     "type": "git",
