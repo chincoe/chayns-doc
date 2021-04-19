@@ -953,21 +953,21 @@ export interface Intercom {
 
 export interface ChaynsCall {
     action: number;
-    value?: {
+    value?: Record<string, string | number | boolean | Array<string | number | boolean> | Record<string, any> | any> & {
         callback?: string,
-        addJSONParam?: string,
-        [key: string]: string
+        addJSONParam?: string
     }
 }
 
 export interface SmartShopArticle {
     id: number;
     amount: number;
-    meta?: string
+    meta?: string,
+    info?: string
 }
 
 export interface SmartShop {
-    init(config: Partial<ShopInitConfig>): Promise<any>;
+    init(config?: Partial<ShopInitConfig>): Promise<any>;
 
     offer: {
         getCachedCategories(param1?: any, param2?: any): Promise<Array<ShopOfferCategory>>;
