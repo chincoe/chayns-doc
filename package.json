@@ -17,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc.git"
+    "url": "git+https://github.com/chincoe/chayns-doc.git"
   },
   "keywords": [
     "chayns",
@@ -30,9 +30,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc/issues"
+    "url": "https://github.com/chincoe/chayns-doc/issues"
   },
-  "homepage": "https://gitlab.tobit.com/JuniorTeam/helper/chayns-doc#readme",
+  "homepage": "https://github.com/chincoe/chayns-doc#readme",
   "devDependencies": {
     "eslint": "^7.14.0",
     "eslint-plugin-jsdoc": "^30.7.8",
