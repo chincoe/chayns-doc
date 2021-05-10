@@ -131,6 +131,8 @@ export interface Chayns {
 
     invokeCall(call: ChaynsCall, realResolve?: boolean): Promise<any>;
 
+    invokeCall(call: string): Promise<any>;
+
     showWaitCursor(text?: string, textTimeout?: number, action?: string): Promise<any>;
 
     hideWaitCursor(): Promise<any>;
