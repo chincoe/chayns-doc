@@ -8,12 +8,14 @@
   ],
   "scripts": {
     "pub": "npm publish",
-    "pub:patch": "npm version patch --no-git-tag-version && npm publish",
-    "pub:minor": "npm version minor --no-git-tag-version && npm publish",
-    "pub:major": "npm version major --no-git-tag-version && npm publish",
-    "preversion": "node deprecate.js",
-    "postpublish": "node commit.js",
-    "prepublishOnly": "copy src dist /y"
+    "pub:beta": "npm version prerelease --preid=beta --no-git-tag-version && node scripts.js -publish",
+    "pub:patch": "npm version patch --no-git-tag-version && node scripts.js -publish -release",
+    "pub:minor": "npm version minor --no-git-tag-version && node scripts.js -publish -release",
+    "pub:major": "npm version major --no-git-tag-version && node scripts.js -publish -release",
+    "preversion": "node scripts.js -deprecate",
+    "build": "copy src dist /y",
+    "prepublish": "npm run build",
+    "postversion": "npm run build"
   },
   "repository": {
     "type": "git",
