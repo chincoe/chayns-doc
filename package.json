@@ -1,19 +1,18 @@
 {
   "name": "chayns-doc",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "A typescript type definition for the chayns v4 client api",
   "types": "dist/index.d.ts",
   "files": [
     "dist/index.d.ts"
   ],
   "scripts": {
-    "pub": "npm publish",
+    "build": "copy src dist /y",
     "pub:beta": "npm version prerelease --preid=beta --no-git-tag-version && node scripts.js -publish",
     "pub:patch": "npm version patch --no-git-tag-version && node scripts.js -publish -release",
     "pub:minor": "npm version minor --no-git-tag-version && node scripts.js -publish -release",
     "pub:major": "npm version major --no-git-tag-version && node scripts.js -publish -release",
     "preversion": "node scripts.js -deprecate",
-    "build": "copy src dist /y",
     "prepublish": "npm run build",
     "postversion": "npm run build"
   },
