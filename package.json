@@ -7,14 +7,13 @@
     "dist/index.d.ts"
   ],
   "scripts": {
-    "build": "copy src dist /y",
+    "build": "(if not exist dist/index.d.ts mkdir dist) && copy src dist /y",
     "pub:beta": "npm version prerelease --preid=beta --no-git-tag-version && node scripts.js -publish",
     "pub:patch": "npm version patch --no-git-tag-version && node scripts.js -publish -release",
     "pub:minor": "npm version minor --no-git-tag-version && node scripts.js -publish -release",
     "pub:major": "npm version major --no-git-tag-version && node scripts.js -publish -release",
     "preversion": "node scripts.js -deprecate",
-    "prepublish": "npm run build",
-    "postversion": "npm run build"
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
