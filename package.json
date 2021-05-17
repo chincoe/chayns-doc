@@ -1,6 +1,6 @@
 {
   "name": "chayns-doc",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A typescript type definition for the chayns v4 client api",
   "types": "dist/index.d.ts",
   "files": [
