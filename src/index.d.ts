@@ -425,7 +425,7 @@ export interface IntervalItem {
 
 export interface SelectDialogItem {
     name: string,
-    value: string | number | { [key: string]: any },
+    value: string | number | Record<string, unknown> | boolean,
     backgroundColor?: string,
     className?: string,
     url?: string,
