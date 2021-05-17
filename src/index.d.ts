@@ -343,7 +343,7 @@ export interface Dialog {
         minuteInterval?: number;
         preSelect?: Date | Date[] | number[] | IntervalItem;
         multiselect?: boolean;
-        disabledDate?: Date[] | number[];
+        disabledDates?: Date[] | number[];
         textBocks?: DialogTextBlock[];
         yearSelect?: boolean;
         monthSelect?: boolean;
