@@ -344,7 +344,7 @@ export interface Dialog {
         preSelect?: Date | Date[] | number[] | IntervalItem;
         multiselect?: boolean;
         disabledDates?: Date[] | number[];
-        textBocks?: DialogTextBlock[];
+        textBlocks?: DialogTextBlock[];
         yearSelect?: boolean;
         monthSelect?: boolean;
         interval?: boolean;
@@ -410,7 +410,7 @@ export interface AdvancedDateDialogResult {
 export interface DialogTextBlock {
     headline: string;
     text: string;
-    position: string;
+    position: number;
 }
 
 export interface WeekDayIntervalObject {
