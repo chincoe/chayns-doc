@@ -255,8 +255,8 @@ export interface GetUserResult {
 export interface GetUserConfig {
     accessToken?: string,
     fbId?: number,
-    userID?: number,
-    personID?: string
+    userId?: number,
+    personId?: string
 }
 
 export interface GeoLocation {
