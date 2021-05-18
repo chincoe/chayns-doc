@@ -726,6 +726,7 @@ export interface Site {
     title: string;
     language: string;
     tapps: Tapp[];
+    translang: string;
     facebookPageId: null;
     color: string;
     colorMode: number;
