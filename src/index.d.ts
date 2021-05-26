@@ -674,16 +674,16 @@ export interface ChaynsEditorLogger {
 }
 
 export interface Device {
-    deviceAccessToken: any,
+    deviceAccessToken?: string,
     dfaceVersion: any,
     fontScale: any,
-    imei: any,
+    imei?: string,
     languageId: any,
     minLogLevel: any,
     model: any,
     systemName: any,
-    uid: any,
-    version: any
+    uid?: string,
+    version?: any
 }
 
 declare enum networkType {
