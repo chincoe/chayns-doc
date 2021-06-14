@@ -1349,7 +1349,7 @@ export interface ShopAdminOrder {
 export interface ShopAdminOutput {
     assign(param?: any): any;
 
-    create(output: Partial<ProcessorOutput>): Promise<any>;
+    create(outputs: Partial<ProcessorOutput>[]): Promise<any>;
 
     get(param?: any): any;
 
